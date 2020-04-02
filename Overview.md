@@ -70,7 +70,7 @@ multiple technologies (micro-services, stateful workloads etc). Each of
 these components (a.k.a. applications) can have multiple deployments
 (a.k.a. AppInstances) in different zones.
 
-![](./media/image1.png)
+![](./media/Application-Components.png)
 
 Applications have characteristics which could include teams, source
 code/image, deployments, interactions etc., these characteristics can be
@@ -87,7 +87,7 @@ specification and LDAP DN RFC 4514 and RFC 2253. JWT subject (sub)
 claim, X.509 subject and Kerberos principal are represented using this
 naming. Few examples of identity subjects are shown below.
 
-![](./media/image2.png)
+![](./media/Application-Identity-DN.png)
 
 Bootstrapping application identity
 ----------------------------------
@@ -114,7 +114,7 @@ done via
 
 -   Direct injection to application (e.g. Via secrets in Kubernetes)
 
-![](./media/image3.png)
+![](./media/Application-Bootstrap.png)
 
 All tokens in TrustFabric specification are short duration tokens, which
 requires a mechanism to re-evaluate trust and replenish the referral
@@ -124,7 +124,7 @@ Once application receives the referral token (a.k.a. Code grant), it can
 use the token flow to obtain access tokens with identity and
 authorization claims.
 
-![](./media/image4.png)
+![](./media/Application-token.png)
 
 Securing application interactions using TrustFabric 
 ---------------------------------------------------
@@ -142,7 +142,7 @@ Certificate DNS entry. This allows clients to authenticate the target
 service identity. With both client and target service validating each
 other, mechanism provides a strong authentication.
 
-![](./media/image5.png)
+![](./media/Application-overview.png)
 
 TrustFarbic Control Plane Components
 ------------------------------------
