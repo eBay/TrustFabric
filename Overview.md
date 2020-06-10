@@ -4,14 +4,13 @@ Introduction
 ============
 
 TrustFabric is an open-source specification and implementation for
-Application Identity and Access management. It secures interactions
+Cloud Native Identity and Access management. It secures interactions
 between applications and between users and applications.
 
-TrustFabric establishes the application organization and life-cycle
-model for a strong application identity representation. The
-specification itself is a collection of industry standards, aligned to
-provide very high interoperability and security to help organizations
-leverage their investments in existing identity and security solutions.
+TrustFabric is an extension of OAuth2, OIDC and UMA 2.0 specifications. 
+It establishes a strong application identity representation for handing 
+the challenges associated with microservices, e.g. compromised application
+identity and credentials, larger attack surface and confused deputy.
 
 Challenges
 ==========
@@ -34,117 +33,78 @@ Summarizing these challenges:
 
 -   Scale and time-sensitivity
 
+-   Weak security model
+
 To solve these challenges, a comprehensive, secure, interoperable and
 flexible approach is needed.
 
 Goals
 =====
 
-1.  Define models to align application lifecycle for strong identity and
-    access
+1.  Define models to align application lifecycle for strong **password-less** 
+    identity and access. Essentially any static credential that can be used
+    to impersonate an application should be avoided.
 
-2.  Standardize identity representation, verification, and validation
+1.  Standardize identity representation, bootstrapping, verification, and 
+    validation
 
-3.  Federate application identity across clusters
+1. Improve resiliency and reliability by making authentication, access and authorization decision local
 
-4.  Standardize authentication for User-to-App, App-to-App and
-    User-to-App-to-App scenarios
+1.  Federate application identity across clusters
 
-5.  Standardization and implementation of access control and
-    fine-grained authorizations for cloud-native workloads
+1.  Standardize authentication and authorization for User-to-App, App-to-App, 
+    User-to-App-to-App and App-to-App-to-App scenarios
 
-6.  Achieve interoperability and ease of adoption
+1.  Improve security posture by eliminating static secrets, reducing attack surface and bringing accountability.
 
-7.  Reference implementation
+1.  Achieve interoperability (OAuth2, OIDC, UMA 2.0 etc) and ease of adoption
+
+1.  Provide a reference implementation
 
 Overview
 ========
+
+Securing application interactions using TrustFabric 
+---------------------------------------------------
+
+TrustFabric leverages JWT based Application Identity and Access Tokens for representing client application identity. Token represents the complete identity of the client application and can be validated locally by target service without external
+interaction/dependencies. Since tokens are short duration tokens,
+renewal will ensure updates on claims are available in the token. All interactions happen over TLS 1.2+ enabled communication. Since interactions may be initiated by a users, job or an agent, TrustFabric build interoperability with OIDC/OAuth2 and extends it for application identities and interactions. The on-behalf-of and authorized presenter functionality helps in retaining the initiator context during app-to-app interactions. Mutual authentication is achieved by leveraging TLS 1.2 verification based on RFC 6125 for the server and JWT based client identity. Access policies are embedded as claims for the client application, this makes authentication and authorization completely local and eliminates dependencies on external services.
+
+![](./media/Application-overview.png)
+
+
+### Fabric of trusted applications
+TrustFabric relies on building a strong fabric for interactions between trusted application. The trusted fabric is built using 
+1.  Encrypted communication with strong server network identity. This is achieved by using TLS 1.2+ with server certificates and RFC 6125 compliant verification
+1.  Dynamic, trust aware, transparent, non-repudiation  and MitM safe client tokens. This is covered in details in the [Identities](./Identity.md) section
+1.  Secure handshake that establishes the authenticity of communicating parties and a secure channel that is allowed by access policy embedded as token scope. This is covered in details in [TrustFabric](./TrustFabric.md) section
+
+This allows secure and trusted communication that is allowed based on policies and best-practices for securing interactions in both private and public network scenarios.   
+*Note: Additional controls like application firewall, network ACL etc might have to be enabled based on security requirements, these controls will be covered by the specification in the future.*
+
+### Securing Application flows End-to-End
+Application interactions are more complex than simple app-to-app interactions. With micro-services there is increased attack surface and more complex interaction patterns e.g. user-to-app-to-app and app-to-app-to-app where source identity context might have to be propagated across multiple applications. E.g. a user context might have to be passed with verification capabilities across multiple micro-services to avoid confused deputy vulnerability.
+Specification achieves this by building interoperability and profiles for OIDC and UMA 2 specifications. Details are covered in [Identities](./Identity.md) and [TrustFabric](./TrustFabric.md) sections.
+
 
 Representing application identity
 ---------------------------------
 
 Typically, business functions consist of multiple components e.g.
-Frontend Web/Mobile, Application APIs, databases etc. These components
-are maintained by different teams and typically are a combination of
-multiple technologies (micro-services, stateful workloads etc). Each of
-these components (a.k.a. applications) can have multiple deployments
-(a.k.a. AppInstances) in different zones.
+Frontend Web/Mobile, Application APIs, databases, agents, jobs etc. 
+These components are maintained by different teams and typically are a 
+combination of multiple technologies (micro-services, stateful workloads 
+etc). Each of these components (a.k.a. applications) can have multiple 
+deployments (a.k.a. AppInstances) in different zones.
 
 ![](./media/Application-Components.png)
 
-Applications have characteristics which could include teams, source
-code/image, deployments, interactions etc., these characteristics can be
-used to identify and represent the application components. TrustFabric
-focuses on providing flexible mechanisms for representing applications
-using these characteristics. Application identity can be represented
-using OAuth2 JWT tokens, X.509 certificates and Kerberos tokens.
+Application identity is represented as a JWT tokens, Kerberos tokens or X.509 certificates, where identity subject is represented using LDAP/X.509 Distinguished naming syntax. Application primary method of identification is a JWT token, while Kerberos and X.509 certificates are used to represent derived and network service identities.
 
-### Application Identity Subject representation
 
-TrustFabric uses the directory naming model based on distinguished names
-to represent application identity subject. Model is based on X.500
-specification and LDAP DN RFC 4514 and RFC 2253. JWT subject (sub)
-claim, X.509 subject and Kerberos principal are represented using this
-naming. Few examples of identity subjects are shown below.
 
-![](./media/Application-Identity-DN.png)
-
-Bootstrapping application identity
-----------------------------------
-
-Applications share identity with other applications on the network for
-app-app interactions. Application needs to be bootstrapped with identity
-for these interactions. TrustFabric is a passwordless mechanism and
-implements a two step mechanism to establish identity.
-
--   Referral identity injection via trust delegation
-
--   Obtaining Identity and Access tokens for interactions
-
-As part of referral identity injection, application deployment is
-provided with a referral identity token by TrustFabric, based on trust
-declared by trusted referrer e.g. DevOps managing applications or k8s
-operators etc. This referral identity can later be used by application
-to obtain identity and access tokens. TrustFabric leverages OAuth2 to
-implement token request flows. The referral tokens are treated as
-code-grant issued by DevOps or by Operators. Code-grant delivery can be
-done via
-
--   OAuth2 code-grant flow
-
--   Direct injection to application (e.g. Via secrets in Kubernetes)
-
-![](./media/Application-Bootstrap.png)
-
-All tokens in TrustFabric specification are short duration tokens, which
-requires a mechanism to re-evaluate trust and replenish the referral
-tokens to the application.
-
-Once application receives the referral token (a.k.a. Code grant), it can
-use the token flow to obtain access tokens with identity and
-authorization claims.
-
-![](./media/Application-token.png)
-
-Securing application interactions using TrustFabric 
----------------------------------------------------
-
-Once the token bootstrapping is done, applications can interact with the
-other services using the identity and access token obtained. Token
-represents the complete identity of the client application and can be
-validated locally by target service without external
-interaction/dependencies. Since tokens are small duration tokens,
-renewal will ensure updates on claims are available in the token.
-TrustFarbic follows the OAuth2/JWT access token model, which is widely
-adopted in the industry. It requires target service to implement TLS
-endpoint with network identity of the service represented by the
-Certificate DNS entry. This allows clients to authenticate the target
-service identity. With both client and target service validating each
-other, mechanism provides a strong authentication.
-
-![](./media/Application-overview.png)
-
-TrustFarbic Control Plane Components
+TrustFabric Control Plane Components
 ------------------------------------
 
 ### Federated Control Plane Components
@@ -156,7 +116,7 @@ TrustFarbic Control Plane Components
 
 -   Authentication and token services (OIDC, OAuth2, LDAP, KDC)
 
--   Key and Certificate Services
+-   Key and Certificate Services/Agents
 
 ### Distributed Control Plane Components
 
@@ -172,12 +132,16 @@ Standards and Specifications
 
 1.  OAuth2.0 [[RFC 6749]](https://tools.ietf.org/html/rfc6749)
 
-2.  Open ID Coneect Specifications: [[OIDC]](https://openid.net/developers/specs/)
+1.  Open ID Coneect Specifications: [[OIDC]](https://openid.net/developers/specs/)
 
-3.  JWT profile for OAuth2.0 [[RFC 7523]](https://tools.ietf.org/html/rfc7523)
+1.  JWT profile for OAuth2.0 [[RFC 7523]](https://tools.ietf.org/html/rfc7523)
 
-4.  ITU [[X.509]](https://www.itu.int/rec/T-REC-X.509/en)
+1.  ITU [[X.509]](https://www.itu.int/rec/T-REC-X.509/en)
 
-5.  SASL for OAuth [[RFC 7628]](https://tools.ietf.org/html/rfc7628)
+1.  SASL for OAuth [[RFC 7628]](https://tools.ietf.org/html/rfc7628)
 
-6.  X.500/LDAP DN representation [[RFC 4514]](https://tools.ietf.org/html/rfc4514)
+1.  X.500/LDAP DN representation [[RFC 4514]](https://tools.ietf.org/html/rfc4514)
+
+1.  Representation and Verification of Domain-Based Application Service
+    Identity within Internet Public Key Infrastructure Using X.509 (PKIX)
+    Certificates in the Context of Transport Layer Security (TLS)[[RFC 6125]](https://tools.ietf.org/html/rfc6125)
