@@ -102,7 +102,18 @@ deployments (a.k.a. AppInstances) in different zones.
 
 Application identity is represented as a JWT tokens, Kerberos tokens or X.509 certificates, where identity subject is represented using LDAP/X.509 Distinguished naming syntax. Application primary method of identification is a JWT token, while Kerberos and X.509 certificates are used to represent derived and network service identities.
 
-
+Ecosystem: OIDC, OAuth2, UMA and TrustFabric
+---------------------------------------
+* OAuth2 is the center of the universe
+* OAuth2 is a delegation mechanism typically used by user to delegate access authorizations to a client application. This allows client application to access user's resources.
+* UMA2 is a authorization mechanism built for user to grant other users an access to resource they own in a controlled manner
+* OIDC provides mechanism to authenticate users and identify user from client application perspective
+* TrustFabric serves aspect of OAuth2 and OIDC in app-app context
+  * TrustFabric provides an identity and authentication for client application
+  * TrustFabric provides mechanism to authorize application to application access
+  * TrustFabric allows OIDC/OAuth2 based delegations in user-app-app or app-app-app interaction pattern  
+  
+[TODO] Add diagram
 
 TrustFabric Control Plane Components
 ------------------------------------
