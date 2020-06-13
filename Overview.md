@@ -109,11 +109,12 @@ Ecosystem: OIDC, OAuth2, UMA and TrustFabric
 * UMA2 is a authorization mechanism built for user to grant other users an access to resource they own in a controlled manner
 * OIDC provides mechanism to authenticate users and identify user from client application perspective
 * TrustFabric serves aspect of OAuth2 and OIDC in app-app context
-  * TrustFabric provides an identity and authentication for client application
+  * TrustFabric provides an identity and authentication for client application. The `client_id` field and `client_secret` are `sub` claim and the access token provided by TrustFabric to the client
   * TrustFabric provides mechanism to authorize application to application access
   * TrustFabric allows OIDC/OAuth2 based delegations in user-app-app or app-app-app interaction pattern  
-  
-[TODO] Add diagram
+
+Diagram below compares OAuth2, OIDC, UMA2 and TrustFabric
+![](./media/Application-Compare.png)
 
 TrustFabric Control Plane Components
 ------------------------------------

@@ -24,8 +24,8 @@ Bootstrap tokens (a.k.a. Referral tokens) are equivalent to OAuth2 code-grant. T
   "iss": "https://as.acme.org/v2/",
   "nbf": 1591739154,
   "jti": "05612104",
-  "sub": "uid=jdoe, ou=platform, o=people, dc=acme, dc=org",
-  "aud": "cn=prod-cart + L=production, ou=cartdb, o=cart, dc=acme, dc=org",
+  "sub": "uid=jdoe, ou=platform, o=people, dc=users, dc=acme, dc=org",
+  "aud": "cn=prod-cart + L=production, ou=cartdb, o=cart, dc=apps, dc=acme, dc=org",
   "inst": [
     "10.147.185.209"
   ]
@@ -48,7 +48,7 @@ In the token above `iss` represents the issuer, `sub` represents the referrer id
   "iss": "https://as.acme.org/v2/",
   "nbf": 1591739154,
   "jti": "7630F317",
-  "sub": "cn=prod-cart + L=production, ou=cartdb, o=cart, dc=acme, dc=org",
+  "sub": "cn=prod-cart + L=production, ou=cartdb, o=cart, dc=apps, dc=acme, dc=org",
   "inst": [
     "10.147.185.209"
   ]
@@ -70,7 +70,7 @@ In the token above `iss` represents the issuer, `sub` represents the referrer id
   "iss": "https://as.acme.org/v2/",
   "nbf": 1591739154,
   "jti": "B766E832",
-  "sub": "cn=prod-cart + L=production, ou=cartdb, o=cart, dc=acme, dc=org",
+  "sub": "cn=prod-cart + L=production, ou=cartdb, o=cart, dc=apps, dc=acme, dc=org",
   "inst": [
     "10.147.185.209"
   ]
@@ -118,10 +118,22 @@ authorization claims.
 
 ![](./media/Application-token.png)
 
+
+Token Identifier
+----------------
+Although JWT is a transparent token implementation, there are scenarios where a unique identifier for a token is needed. This includes Security logging, Token revocations etc. Specification provides following guidelines for creation of unique token identifier:
+*   Use `jti` claim to represent the unique identifier
+*   Unique identifier should include checksum of claims representing at least `sub`, `aud`, access and authorization claims
+*   Avoid using `iat`, `nbf` and `exp` claims in the checksum
+*   Use small clear-text identifier portion of the subject for cross reference
+*   A time-bucket based implementation (e.g. TOTP) can be used to add time factor while generation of `jti` claim. Caution is needed to account for a clock skew, e.g. jitter can be defined to account for acceptable clock skew
+*  The checksum, clear text and time based components can be combined to create unique identifier. This identifier will stay same for the given time-bucket as long as no claims are changed
+
 Token Formats
 -------------
 ### Signing
 ### Encryption
+### Compression
 
 Token Verification
 ------------------
@@ -129,11 +141,5 @@ Token Verification
 Access Validation
 -----------------
 
-OIDC Tokens
-===========
-
-UMA Tokens
-==========
-
-OAuth2 Tokens
-=============
+Token Revocation List
+----------------------
