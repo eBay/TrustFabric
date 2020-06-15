@@ -5,7 +5,7 @@
 * [Identity Representation](./Identity.md)
 * [Tokens and Validations](./Tokens.md)
 * [Interactions and Protocol](./InterOp.md)
-* [LDAP Integration](./)
+* [LDAP Integration](./LdapSchema.md)
 * Service Mesh Integration
 * FAQ
 
