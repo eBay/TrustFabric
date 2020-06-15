@@ -3,8 +3,8 @@
 Introduction
 ============
 
-TrustFabric is an open-source specification and implementation for
-Cloud Native Identity and Access management. It secures interactions
+TrustFabric is an open-source specification and implementation for an application
+centric Cloud-Native Identity and Access management. It secures interactions
 between applications and between users and applications.
 
 TrustFabric is an extension of OAuth2, OIDC and UMA 2.0 specifications. 
@@ -20,7 +20,7 @@ Enterprises typically have a multitude of heterogeneous applications
 speak different protocols, they are built using different programming
 languages and they have different authentication and access
 requirements. Enterprises may also have specialized deployment topology,
-multiple lifecycles and different security zones (e.g. SOX, PCI) for
+multiple life-cycles and different security zones (e.g. SOX, PCI) for
 hosting applications.
 
 Summarizing these challenges:
@@ -41,21 +41,17 @@ flexible approach is needed.
 Goals
 =====
 
-1.  Define models to align application lifecycle for strong **password-less** 
-    identity and access. Essentially any static credential that can be used
-    to impersonate an application should be avoided.
-
 1.  Standardize identity representation, bootstrapping, verification, and 
     validation
 
-1. Improve resiliency and reliability by making authentication, access and authorization decision local
+1.  Federate application identities across clusters, security-zones and life-cycles
 
-1.  Federate application identity across clusters
+1.  Improve security posture by eliminating static secrets (**password-less**), reducing attack surface and bringing accountability. Trust and dynamic evaluation of trust are the new security anchors for application identity. 
+
+1.  Improve resiliency and reliability by making authentication, access and authorization decision local
 
 1.  Standardize authentication and authorization for User-to-App, App-to-App, 
     User-to-App-to-App and App-to-App-to-App scenarios
-
-1.  Improve security posture by eliminating static secrets, reducing attack surface and bringing accountability.
 
 1.  Achieve interoperability (OAuth2, OIDC, UMA 2.0 etc) and ease of adoption
 
@@ -77,7 +73,7 @@ renewal will ensure updates on claims are available in the token. All interactio
 ### Fabric of trusted applications
 TrustFabric relies on building a strong fabric for interactions between trusted application. The trusted fabric is built using 
 1.  Encrypted communication with strong server network identity. This is achieved by using TLS 1.2+ with server certificates and RFC 6125 compliant verification
-1.  Dynamic, trust aware, transparent, non-repudiation  and MitM safe client tokens. This is covered in details in the [Identities](./Identity.md) section
+1.  Dynamic, trust aware, transparent, non-repudiation  and MitM safe client application tokens. This is covered in details in the [Identities](./Identity.md) section
 1.  Secure handshake that establishes the authenticity of communicating parties and a secure channel that is allowed by access policy embedded as token scope. This is covered in details in [TrustFabric](./TrustFabric.md) section
 
 This allows secure and trusted communication that is allowed based on policies and best-practices for securing interactions in both private and public network scenarios.   
@@ -113,9 +109,10 @@ Ecosystem: OIDC, OAuth2, UMA and TrustFabric
   * TrustFabric provides mechanism to authorize application to application access
   * TrustFabric allows OIDC/OAuth2 based delegations in user-app-app or app-app-app interaction pattern  
 
-Diagram below compares OAuth2, OIDC, UMA2 and TrustFabric
+Diagram below compares OAuth2, OIDC, UMA2 and TrustFabric  
 ![](./media/Application-Compare.png)
 
+  
 TrustFabric Control Plane Components
 ------------------------------------
 
@@ -132,12 +129,13 @@ TrustFabric Control Plane Components
 
 ### Distributed Control Plane Components
 
--   Bootstrap Controllers (CodeGrant)
+-   Bootstrap Controllers (CodeGrant, X.509 Certs, Keytabs/KRB tokens)
 
 -   Admission Webhooks
 
--   Application Specific Sidecars (X.509, KRB keytab and
-    Identity/AccessToken delivery)
+-   Application Specific Sidecars 
+    -   Identity, access token refresh and delivery
+    -   Verification of Caller Identity and Claims
 
 Standards and Specifications
 ============================
