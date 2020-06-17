@@ -72,15 +72,15 @@ renewal will ensure updates on claims are available in the token. All interactio
 
 ### Fabric of trusted applications
 TrustFabric relies on building a strong fabric for interactions between trusted application. The trusted fabric is built using 
-1.  Encrypted communication with strong server network identity. This is achieved by using TLS 1.2+ with server certificates and RFC 6125 compliant verification
-1.  Dynamic, trust aware, transparent, non-repudiation  and MitM safe client application tokens. This is covered in details in the [Identities](./Identity.md) section
-1.  Secure handshake that establishes the authenticity of communicating parties and a secure channel that is allowed by access policy embedded as token scope. This is covered in details in [TrustFabric](./TrustFabric.md) section
+1.  Encrypted communication with strong server network identity. This is achieved by using TLS 1.2+ with server certificates and RFC 6125 compliant verification. This provides confidentiality and server authentication
+1.  Dynamic, trust aware, transparent, non-repudiable  and MitM safe client application tokens. This is covered in details in the [Identities](./Identity.md) section. This provides the mutual authentication by providing verifiable client application identity to server application
+1.  Policy based access which is locally verifiable. This is covered in details in [TrustFabric](./TrustFabric.md) and [Interoperability](./InterOp.md) sections.
 
 This allows secure and trusted communication that is allowed based on policies and best-practices for securing interactions in both private and public network scenarios.   
 *Note: Additional controls like application firewall, network ACL etc might have to be enabled based on security requirements, these controls will be covered by the specification in the future.*
 
 ### Securing Application flows End-to-End
-Application interactions are more complex than simple app-to-app interactions. With micro-services there is increased attack surface and more complex interaction patterns e.g. user-to-app-to-app and app-to-app-to-app where source identity context might have to be propagated across multiple applications. E.g. a user context might have to be passed with verification capabilities across multiple micro-services to avoid confused deputy vulnerability.
+Application interactions are more complex than simple app-to-app interactions. With micro-services there is increased attack surface and more complex interaction patterns e.g. user-to-app[-to-app]<sup>\+</sup> and app-to-app[-to-app]<sup>\+</sup> where source identity context might have to be propagated across multiple applications. E.g. a user context might have to be passed with verification capabilities across multiple micro-services to avoid confused deputy vulnerability.
 Specification achieves this by building interoperability and profiles for OIDC and UMA 2 specifications. Details are covered in [Identities](./Identity.md) and [TrustFabric](./TrustFabric.md) sections.
 
 
