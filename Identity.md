@@ -87,6 +87,16 @@ Mapping Identities
 ==================
 TrustFabric allows identity creation via mappings. This allows easier and flexible adoption of identity representation in your environment.
 
+Mapping Identities in Kubernetes
+--------------------------------
+In Kubernetes following objects are available for mapping applications:
+1. Clusters
+1. Namespaces
+1. Deployments
+
+**Important**: TrustFabric is a federated implementation for application and user identities. Based on your implementation, additional controls may be required to implement unique identities across a multi-cluster Kubernetes infrastructure.
+
+
 
 
 Delegation

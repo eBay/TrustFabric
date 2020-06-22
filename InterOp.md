@@ -1,43 +1,58 @@
 # Interactions and Interoperability
+TrustFabric separates the interactions in two layer. First layer is *trusted underlay*, which is a fabric of trusted applications, while the second layer is *trusted overlay* which represents the session aspect of interactions initiated by users and apps via delegation of authorization.
 
-Application Referral Token
-==========================
+Building Fabric of trusted applications (Underlay)
+==================================================
+Establishing a trusted fabric of applications (i.e. Underlay) is done in two steps, 
+1. Establishing application identity and 
+2. Establishing access patterns
 
-Application Access Token
-========================
+The application identity is established by injecting code-grant via bootstrapping mechanism (bootstrap/referral token). Application can now use the code-grant to obtain the identity and access token using `token` endpoint of the authorization server.
+
+Application Referral Token Injection
+------------------------------------
+
+### OAuth2 Authorization Code Flow
+#### Authorization end-point
+
+### Back Channel Controller
+
+#### Back channel implementation for Kubernetes
+
+1. Identity Controller
+1. Admission Controller
+
+Application Identity and Access Tokens
+--------------------------------------
+## Token Endpoint
 
 
-Obtaining Tokens
-================
 
 
-
-
-Endpoints and Controllers
-=========================
 
 Referral Token
 --------------
-### Back Channel Controller
+
 
 ### Authorization Endpoint
+
 
 Access Token
 ------------
 ### Token endpoint
+#### Interaction
 
-Service Info
-------------
-### Service Discovery Endpoint
+### Envoy Integration
 
-### Service Onboarding
+Interoperability
+=================
 
+GRPC Based Integrations
+-----------------------
+
+SASL Based Integrations
+-----------------------
 
 OAuth2 and OIDC Interoperability
 ================================
 
-Client Identity
----------------
-
-OAuth2 and OIDC Requests
-------------------------
