@@ -95,28 +95,3 @@ In Kubernetes following objects are available for mapping applications:
 1. Deployments
 
 **Important**: TrustFabric is a federated implementation for application and user identities. Based on your implementation, additional controls may be required to implement unique identities across a multi-cluster Kubernetes infrastructure.
-
-
-
-
-Delegation
-==========
-
-Authorized Presenter (*azp*)
-----------------------------
-
-On Behalf Of (*obo*)
---------------------
-
-Interoperability Considerations
-==============================
-
-
-OIDC
-----
-
-OAuth2
-------
-
-UMA
----

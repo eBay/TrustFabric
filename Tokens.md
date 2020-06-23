@@ -52,6 +52,33 @@ In the token above
 - `inst` is the instance claim and is an array of IP addresses to which this token is issued. These addresses should represent the network identity of the application (`client_id`). Claim can be used to perform the trust verification via reverse lookup for the `token` flow and can also be used to do origin validation during token verification.
 - `vot` and `vom` are the optional vector of trust claims.
 
+In app initiated code code:
+
+```json
+{
+    "alg": "RS256",
+    "typ": "JWT",
+    "kid": "41d3c61d",
+    "x5u": "https://as.acme.org/v2/k/41d3c61d"
+}
+{
+  "exp": 1591742754,
+  "iat": 1591739154,
+  "iss": "https://as.acme.org/v2/",
+  "nbf": 1591739154,
+  "jti": "05612104",
+  "sub": "cn=pass-1+ L=production, ou=paas, o=cloud, dc=apps, dc=acme, dc=org",
+  "client_id": "cn=cartapp-1 + L=production, ou=cartapp, o=cart, dc=apps, dc=acme, dc=org",
+  "aud": "cn=authsrv-1 + L=production, ou=authsrv, o=trustfabric, dc=apps, dc=acme, dc=org",
+  "inst": [
+    "10.147.185.209"
+  ],
+  "vot": "P1.Cc.Ac",
+  "vtm": "https://trustmark.acme.org/trustmark/v2",
+  ...
+}
+```
+
 ### Access token
 Access tokens establish the client identity and also represent the access claims
 ```json
@@ -241,6 +268,7 @@ In the token above:
 
 Obtaining Tokens
 -----------------
+#### Fabric Layer
 Applications share identity with other applications on the network for
 app-app interactions. Application needs to be bootstrapped with identity
 for these interactions. TrustFabric is a password-less mechanism and
@@ -252,52 +280,11 @@ implements a two step mechanism to establish identity.
 
 Application needs to be bootstrapped with referral identity token (A.K.A code grant)
 
-Bootstrapping Application Identity
-----------------------------------
-TrustFabric is a password-less implementation, so applications do not have a static credential. 
-Instead, applications obtain the access token via a referral token, issued by a trusted entity 
-e.g. an authenticated admin user or by a trusted controller which has already established a 
-TrustFabric based identity. Referral tokens are implemented using OAuth2 code grant and JWT 
-representation. Specification extends the delivery model of Code grant, where code grant 
-delegation can happen via:
-1. Dev Ops user authorizing application using OAuth2 Authorization Code Grant Flow based 
-delivery of code grant
-1. Infrastructure controller using a back-channel mechanism to deliver code grant obtained, where 
-infrastructure controller may have been authorized by Dev ops user defined in previous step
-
-As part of referral identity injection, application deployment is provided with
-a short duration referral identity token by TrustFabric, based on the trust declared
-by a trusted referrer e.g. DevOps managing applications or a Kubernetes operator. The
-referral token implements OAuth2 semantics of code-grant, where referrer token identity
-is tied to referrer identity (using `sub` claim), while application identity is captured
-using `aud` claim. The `aud` claim may contain multiple application identities ( this is 
-non recommended as it weakens the security posture). The `aud` claim may contain the authorization
-server identity as well , if the implementation of authorization server requires it.
-This referral identity can later be used by application to obtain identity and access 
-tokens. TrustFabric leverages OAuth2 to implement token request flows. *It is important 
-to note that the token interaction produces access tokens with application's identity and 
-not the tokens for delegated access*. Identity, subject and access claims embedded in the 
-token are for the application. Unlike OIDC, there are no separate identity tokens. The 
-access token is implemented as transparent token using JWT and can be used as application 
-identity token (has identity claims embedded). The 
-referral tokens are treated as code-grant issued by DevOps or by Operators. 
-Code-grant delivery can be done via
-
--   OAuth2 code-grant flow
-
--   Back-channel i.e. Direct injection to application (e.g. Via secrets in Kubernetes)
-
-![](./media/Application-Bootstrap.png)
-
-All tokens in TrustFabric specification are short duration tokens, which
-requires a mechanism to re-evaluate trust and replenish the referral
-tokens to the application.
-
-Once application receives the referral token (a.k.a. Code grant), it can
-use the token flow to obtain access tokens with identity and
-authorization claims.
-
-![](./media/Application-token.png)
+#### Session Layer
+Session layer leverages OIDC and for implementing the delegation to client by resource owner. It also extends the delegation by allowing resources services to forward the session information if required as part of transaction processing.
+- Leverage Fabric Layer identities for application
+- Leverage OIDC code-grant and token flows for Identity and Access tokens for resource owner to client delegation
+- Capture app required forwarders for delegation during consent or as a Policy with out-of-bound concent management
 
 Please refer to **[Token Interactions and Interoperability section](./InterOp.md)** for more details.
 

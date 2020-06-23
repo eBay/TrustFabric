@@ -1,6 +1,7 @@
 # TrustFabric Identity specification
 
 * [Overview](./Overview.md)
+* Terminology
 * [Fabric of Trusted Applications](./TrustFabric.md)
 * [Architecture](./Architecture.md)
 * [Identity Representation](./Identity.md)
