@@ -1,16 +1,25 @@
 TrustFabric Tokens
 ==================
-Application Tokens
-------------------
-TrustFabric implements three tokens for applications:
+TrustFabric specification provides model for:
+1. Fabric layer bootstrap tokens
+1. Fabric layer access tokens
+1. Fabric layer refresh tokens
+1. Session layer code grant
+1. Session layer identity tokens
+1. Session layer access tokens
+1. Session layer refresh tokens
+
+Tokens for Fabric of Trusted Applications
+-----------------------------------------
+TrustFabric implements three tokens for fabric layer:
 1. Bootstrap token (a.k.a. Referral tokens)
 1. Access token
 1. Refresh tokens
 
-While tokens establish the client identity, specification supports X.509 certificates for TLS termination and network identity of server. Specification also supports derived authentication credentials e.g. Kerberos tokens for client authentication. Derived authentication credentials are obtained by using the  access tokens.
+**Note**:While tokens establish the client identity, specification supports X.509 certificates for TLS termination and network identity of server. Specification also supports *derived* authentication credentials e.g. Kerberos tokens for client authentication. Derived authentication credentials are obtained by using the  access tokens.
 
 ### Bootstrap token
-Bootstrap tokens (a.k.a. Referral tokens) are equivalent to OAuth2 code-grant. These are referral tokens issued to application by a trusted referrer. These are implemented as JWT tokens and must contain aud (application) and sub (referrer), besides standard JWT claims. In example below user John Doe (jdoe) from acme.org has issued a code-grant bootstrap token to a cart application pool deployed in production environment:
+Bootstrap tokens (a.k.a. Referral tokens) are equivalent to OAuth2 code-grant. These are referral tokens issued to application by a trusted referrer. These are implemented as JWT tokens and must contain `aud` (application) and `sub` (referrer), besides standard JWT claims. In example below user John Doe (jdoe) from acme.org has issued a code-grant bootstrap token to a cart application pool deployed in production environment:
 ```json
 {
     "alg": "RS256",
@@ -111,6 +120,98 @@ In the token above
 - `inst` is the instance claim and is an array of IP addresses to which this token is issued. These addresses should represent the network identity of the application (`sub`). Claim can be used to perform the trust verification by audience of the token,
 - `vot` and `vom` are the optional vector of trust claims.
 
+Tokens for Session Management
+-----------------------------
+Users, jobs and infrastructure controllers (e.g. Operators) initiate requests which are served by multiple micro-services. It may be necessary to maintain the session information across multiple micro-services calls to avoid security issues like confused deputy. TrustFabric leverages **OIDC** sematic for authorization delegation to client and extends the scope and claims to detain the session information across multiple service calls.
+### Code Grant
+Code grant is issued by authorization server as delegation of authorization by user to the client application. OIDC requires `openid` **must** be presented as `scope` as part of the `/authorize` request. Here is the example of the code grant:
+```json
+{
+    "alg": "RS256",
+    "typ": "JWT",
+    "kid": "41d3c61d",
+    "x5u": "https://as.acme.org/v2/k/41d3c61d"
+}
+{
+  "exp": 1591742754,
+  "iat": 1591739154,
+  "iss": "https://as.acme.org/v2/",
+  "nbf": 1591739154,
+  "jti": "05612114",
+  "sub": "uid=jdoe, ou=platform, o=people, dc=users, dc=acme, dc=org",
+  "client_id": "cn=cartapp-1 + L=production, ou=cartapp, o=cart, dc=apps, dc=acme, dc=org",
+  "aud": "cn=authsrv-1 + L=production, ou=authsrv, o=trustfabric, dc=apps, dc=acme, dc=org",
+  ...
+}
+```
+In the token above 
+- `iss` represents the issuer, 
+- `sub` represents the identity of the user or job or controller that initiated the session, 
+- `client_id` represents the client application identity, 
+- `aud` represent the audience for the code grant i.e. OIDC authorization server. 
+- The `inst`, `vot` and `vom` claims are not available for session layer code grant tokens
+
+### Identity Token
+Identity token is issued as part of the access token request (`/token` endpoint) as part of the OIDC flow.
+Below is the example of an identity token:
+```json
+{
+    "alg": "RS256",
+    "typ": "JWT",
+    "kid": "41d3c61d",
+    "x5u": "https://as.acme.org/v2/k/41d3c61d"
+}
+{
+  "exp": 1591742764,
+  "iat": 1591739164,
+  "iss": "https://as.acme.org/v2/",
+  "nbf": 1591739164,
+  "jti": "05612124",
+  "sub": "uid=jdoe, ou=platform, o=people, dc=users, dc=acme, dc=org",
+  "aud": "cn=cartapp-1 + L=production, ou=cartapp, o=cart, dc=apps, dc=acme, dc=org",
+  ...
+}
+```
+In the token above:
+- `sub` is the subject claim representing the session initiator (user, Job or controller/operator),
+- `aud` is the audience claim, representing the client application identity
+
+**Note**: Identity token represents the session initiator and can be a non-human actor (jobs, controllers etc.)
+
+### Access Token
+TrustFabric leverages transparent token format using JWT for access tokens for session layer as well. TrustFabric extends the OIDC recommended profile and adds additional claims. Below is an example of a access token:
+```json
+{
+    "alg": "RS256",
+    "typ": "JWT",
+    "kid": "41d3c61d",
+    "x5u": "https://as.acme.org/v2/k/41d3c61d"
+}
+{
+  "exp": 1591842754,
+  "iat": 1591739154,
+  "iss": "https://as.acme.org/v2/",
+  "nbf": 1591739154,
+  "jti": "7630F317",
+  "sub": "uid=jdoe, ou=platform, o=people, dc=users, dc=acme, dc=org",
+  "aud": [
+    "cn=cartapi-1 + L=production, ou=cartapi, o=cart, dc=apps, dc=acme, dc=org",
+    "cn=configapp-1 + L=production, ou=configapp, o=cart, dc=apps, dc=acme, dc=org",
+    "cn=vaultapp-1 + L=production, ou=vaultapp, o=vault, dc=apps, dc=acme, dc=org"
+  ],
+  "azp":"cn=cartapp-1 + L=production, ou=cartapp, o=cart, dc=apps, dc=acme, dc=org",
+  "azf": [
+    "cn=cartapi-1 + L=production, ou=cartapi, o=cart, dc=apps, dc=acme, dc=org"
+    ],
+  "scope": "openid",
+  ...
+}
+```
+In the token above:
+- `sub` is the subject claim representing the session initiator who is delegating the access
+- `azp` is the client to which subject delegated the authorization
+- `azf` is the TrustFabric introduced claim representing authorized forwarder. The identified applications in azf can forward the access token to audiences listed in `aud` claim.
+### Refresh Token
 
 Obtaining Tokens
 -----------------
