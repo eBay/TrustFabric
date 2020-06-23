@@ -14,16 +14,17 @@ Application identities are established first using the bootstrapping and token n
     *   Client token carries the attested identity and access (interaction, delegation) policies
 
 ### Methods
-*   SASL chaining based Overlay (TLS and Bearer Token)
-*   HTTPS (Server Cert) + Authorization header (Bearer Token)
-*   GRPC (Server Cert) + Bearer Token
+Underlay identity for applications is specified using the JWT based access token. The access token is presented by client to provide the identity to server for verification, while server presents a X.509 certificate as part of the TLS handshake, which represents the server network identity. Specification supports following methods for application identity verification over network:
+*   SASL chaining based Overlay (TLS and JWT Bearer Token). This is based on [RFC 7628](https://tools.ietf.org/html/rfc7628).
+*   HTTPS (Server Cert) + Authorization header (Bearer Token). This mechanism is most common for HTTP based applications for authentication and authorization.
+*   GRPC (Server Cert) + Bearer Token.
 
 Trusted Overlay
 ===============
-Users interact with applications and these applications may have to interact with other services on-behalf-of the user. These interactions help avoid a classic security concern with microservices i.e. "Confused deputy". TrustFabric allows `obo` (On Behalf Of) claims and `azp` (authorized presenter) claims to allow applications to interact with other applications with user's identity.
-### Goals
+Users interact with applications and these applications may have to interact with other services on-behalf-of the user. These interactions help avoid a classic security concern with micro-services i.e. "Confused deputy". TrustFabric allows `obo` (On Behalf Of) claims and `azp` (authorized presenter) claims to allow applications to interact with other applications with user's identity.
+### Goals   
 *   Establish User Identity and User-Application delegation model
-*   Establish multi level delegation via `obo` and `azp` claims
+*   Establish multi level delegation via authorized presenter (`azp`) and authorized forwarder (`azf`) claims
 *   Establish identification (headers, names etc) for underlay access token and overlay access tokens
 
 ### Methods

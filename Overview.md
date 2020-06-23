@@ -60,8 +60,8 @@ Goals
 Overview
 ========
 TrustFabric implements security using two layer implementation:
-1. Fabric - Underlay that provides secure application interaction
-2. Session - Optional overlay that provides session information about the request initiator for transaction processing
+1. Fabric Layer - Underlay that provides secure application interaction
+2. Session Layer - Optional overlay that provides session information about the request initiator for transaction processing
 
 
 TrustFabric leverages JWT based Application Identity and Access Tokens for representing client application identity. Token represents the complete identity of the client application and can be validated locally by target service without external
@@ -72,6 +72,7 @@ Mutual authentication is achieved by leveraging TLS 1.2 verification based on RF
 ![](./media/Application-overview.png)
 
 Since interactions may be initiated by a users, job or an agent, TrustFabric build interoperability with OIDC/OAuth2 and allows delegation of authorization to application identities and thus allowing the interactions. The on-behalf-of and authorized presenter functionality helps in retaining the initiator context during app-to-app interactions.
+
 ![](./media/TrustFabric-UserSession.png)
 
 ### Fabric of trusted applications
@@ -155,6 +156,10 @@ Standards and Specifications
 1.  SASL for OAuth [[RFC 7628]](https://tools.ietf.org/html/rfc7628)
 
 1.  X.500/LDAP DN representation [[RFC 4514]](https://tools.ietf.org/html/rfc4514)
+
+1. SCIM - System for Cross-domain Identity Management: Core Schema [[RFC 7643]](https://tools.ietf.org/html/rfc7643)
+
+1. SCIM - System for Cross-domain Identity Management: Protocol [[RFC 7644]](https://tools.ietf.org/html/rfc7644)
 
 1.  Representation and Verification of Domain-Based Application Service
     Identity within Internet Public Key Infrastructure Using X.509 (PKIX)

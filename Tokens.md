@@ -89,7 +89,7 @@ In the token above
 - `vot` and `vom` are the optional vector of trust claims.
 
 ### Refresh token
-
+Refresh tokens are similar to access token but with restricted audience claim.
 ```json
 {
     "alg": "RS256",
@@ -211,7 +211,33 @@ In the token above:
 - `sub` is the subject claim representing the session initiator who is delegating the access
 - `azp` is the client to which subject delegated the authorization
 - `azf` is the TrustFabric introduced claim representing authorized forwarder. The identified applications in azf can forward the access token to audiences listed in `aud` claim.
+- `aud` is the array representing resource servers that will accept this access token
+
 ### Refresh Token
+Refresh tokens are similar code grant except that they have `azp` claim representing client identity.
+```json
+{
+    "alg": "RS256",
+    "typ": "JWT",
+    "kid": "41d3c61d",
+    "x5u": "https://as.acme.org/v2/k/41d3c61d"
+}
+{
+  "exp": 1591842754,
+  "iat": 1591739154,
+  "iss": "https://as.acme.org/v2/",
+  "nbf": 1591739154,
+  "jti": "B766E832",
+  "sub": "uid=jdoe, ou=platform, o=people, dc=users, dc=acme, dc=org",
+  "aud": "cn=authsrv-1 + L=production, ou=authsrv, o=trustfabric, dc=apps, dc=acme, dc=org",
+  "azp": "cn=cartapp-1 + L=production, ou=cartapp, o=cart, dc=apps, dc=acme, dc=org",
+  ...
+}
+```
+In the token above:
+- `sub` is the subject claim representing the session initiator who is delegating the access
+- `azp` is the client to which subject delegated the authorization
+- `aud` is the authorization server identity, that can issue access token
 
 Obtaining Tokens
 -----------------
@@ -285,22 +311,33 @@ Although JWT is a transparent token implementation, there are scenarios where a 
 *   A time-bucket based implementation (e.g. TOTP) can be used to add time factor while generation of `jti` claim. Caution is needed to account for a clock skew, e.g. jitter can be defined to account for acceptable clock skew
 *  The checksum, clear text and time based components can be combined to create unique identifier. This identifier will stay same for the given time-bucket as long as no claims are changed
 
-Token Formats
--------------
-## Underlay Supported Schemes
-Following recommendations are for *application identity and access tokens*, representing the underlay network:
+Token algorithms
+----------------
+TrustFabric tokens are required to have following properties:
+1.  Integrity, 
+1.  Authenticity, 
+1.  Non-repudiation capabilities
+1.  Performance (Both sign and Verify)
 ### Recommended Digital Signature Algorithms
-Following JWT signing schemes are recommended based on performance and security requirements of short duration tokens for applications:
-1. RSA - Scheme with RSA asymmetric key pair of size 2048 or higher with SHA256 or SHA384. Sub-variants include:
+Following schemes are recommended
+1.  RS384 - RSA PKCS#1 signature using SHA-384 hash algorithm
+  * Recommended for interoperability and excellent verify performance
+1.  PS384 - RSA PSS signature using SHA-384 hash algorithm
+  * Recommended for interoperability and excellent verify performance  
+1.  Ed25519 - Edward curve (Elliptic curve) digital signature algorithm using SHA-512 and Curve25519
+  * Recommended for excellent sign and verify performance. It is important to note that *Curve25519 is not NIST approved*.
+
+*Note*: Ed25519 has better overall performance characteristics, but it is not NIST approved. It is also an optional algorithm for JWS/JWT.
+
+### Other Supported Mechanism
+Following JWT signing schemes are supported, but not recommended based on performance and security requirements:
+1. RSA - Scheme with RSA asymmetric key pair of size 2048 or higher with SHA256. Sub-variants include:
   * RS256 - RSA PKCS#1 signature using SHA-256 hash algorithm 
-  * RS384 - RSA PKCS#1 signature using SHA-384 hash algorithm 
   * PS256 -  RSA PSS signature using SHA-256 hash algorithm
-  * PS384 -  RSA PSS signature using SHA-384 hash algorithm
 1. ECDSA - Scheme with Elliptic curve digital signing algorithm. Sub-variants include:
   * ES256 - ECDSA using P-256 curve and SHA-256 hash algorithm
   * ES384 - ECDSA using P-384 curve and SHA-384 hash algorithm
-1. EdDSA (OKP) - Scheme with Edwards-curve DSA signature and SHA-2 hashing function. Sub-variants include:
-  * Ed25519
+
 
 **Note**: The digital signature algorithms provide *Integrity, Authenticity and non-repudiation* characteristics to the tokens. They do not provide confidentiality, which makes them unsuitable for sessions and for user tokens requiring confidentiality.
 
@@ -337,3 +374,4 @@ Roadmap for Access Control
 
 Token Revocation List
 ----------------------
+Subsequent version of TrustFabric specification will provide details for token revocation.
