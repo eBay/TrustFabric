@@ -110,18 +110,39 @@ Applications must initiate `token` flow using the referral tokens provided. Impo
 User trusts PaaS operator to inject identity for the application with policy defined access controls. Here User trusting PaaS operator is a OIDC/OAuth2 flow (see trusted session layer below), while PaaS operator providing a bootstrap referral token to an application and application using token end-point to get access token for allowed targets is the fabric layer interaction.
 
 ### Token Endpoint
-Token endpoint flow follows the semantics of RFC 6749. The only optional aspect is the client_secret which may be ommited in for bootstrapping application identity. 
+Token endpoint flow follows the semantics of RFC 6749. The only optional aspect is the client_secret which may be omitted for bootstrapping application identity. 
+```http
+     POST /token HTTP/1.1
+     Host: server.acme.org
+     Content-Type: application/x-www-form-urlencoded
 
+     grant_type=authorization_code&code=[...omitted for brevity...]
+     &redirect_uri=https%3A%2F%2Fclient%acme%2Eorg%2Fcb&&client_id=[...omitted for brevity...]
+```
+Please refer to [RFC 6749 Section 4.1.3](https://tools.ietf.org/html/rfc6749#section-4.1.3) for required attributes.
 
+Note: Consider PKCE specification.
 
+Refresh token flow also follows RFC 6749:
+```http
+     POST /token HTTP/1.1
+     Host: server.acme.org
+     Content-Type: application/x-www-form-urlencoded
+
+     grant_type=refresh_token&refresh_token=[...omitted for brevity...]
+     &client_id=[...omitted for brevity...]
+```
+`client_secret` is not needed. Refresh token in TrustFabric is the identity token and can be used by authorization service for validation.
 
 Access Token Interoperability
 -----------------------------
 ### Application Interaction
-
+Fabric access token should be treated as a JWT bearer token.
 
 
 ### OAuth2 and OIDC Interoperability
+
+Fabric layer Access token can be used as client_credential for OIDC interactions.
 
 Building trusted session layer (Overlay)
 ========================================
@@ -130,10 +151,25 @@ OIDC Code Grant Flow
 --------------------
 
 ### User based delegation
+User based delegation to client application is done using `/authorize` endpoint, after user is authentication. Authentication processor (e.g. SSO) will invoke authorization code grant flow.
+```http
+  GET /authorize?
+    response_type=code
+    &scope=openid%20..%20..
+    &client_id=[...omitted for brevity...]
+    &state=af0ifjsldkj
+    &redirect_uri=https%3A%2F%2Fclient.acme.org%2Fcb HTTP/1.1
+  Host: server.acme.org
+  Authorization: bearer client_secret
+```
+Authorization may be required between authentication and authorization endpoint (if hosted separately), in such a case fabric layer client access token can be used as bearer token in the authorization header (`client_secret`).
 
 ### Application based delegation
+Application based delegation is similar to user based delegation, only difference is the requirement of fabric layer access token for initiator application, and authorization to access the authorization endpoint.
 
 ### Claims
+TBD
+
 
 Tokens Flow
 -----------
