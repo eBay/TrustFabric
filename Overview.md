@@ -3,25 +3,14 @@
 Introduction
 ============
 
-TrustFabric is an open-source specification and implementation for an application
-centric Cloud-Native Identity and Access management. It secures interactions
-between applications and between users and applications.
+TrustFabric is an open-source specification and implementation for an application centric Cloud-Native Identity and Access management. It secures interactions between applications and between users and applications.
 
-TrustFabric is an extension of OAuth2, OIDC and UMA 2.0 specifications. 
-It establishes a strong application identity representation for handling 
-the challenges associated with microservices, e.g. compromised application
-identity and credentials, larger attack surface and [confused deputy](https://en.wikipedia.org/wiki/Confused_deputy_problem).
+TrustFabric is an extension of OAuth2, OIDC specifications and also aligns with Kintara UMA 2.0 specifications. It establishes a strong application identity representation for handling the challenges associated with micro-services, e.g. compromised application identity and credentials, larger attack surface and [confused deputy](https://en.wikipedia.org/wiki/Confused_deputy_problem).
 
 Challenges
 ==========
 
-Enterprises typically have a multitude of heterogeneous applications
-(a.k.a. services). These applications have different architecture, they
-speak different protocols, they are built using different programming
-languages and they have different authentication and access
-requirements. Enterprises may also have specialized deployment topology,
-multiple life-cycles and different security zones (e.g. SOX, PCI) for
-hosting applications.
+Enterprises typically have a multitude of heterogeneous applications (a.k.a. services). These applications have different architecture, they speak different protocols, they are built using different programming languages and they have different authentication and access requirements. Enterprises may also have specialized deployment topology, multiple life-cycles and different security zones (e.g. SOX, PCI) for hosting applications.
 
 Summarizing these challenges:
 
@@ -35,23 +24,20 @@ Summarizing these challenges:
 
 -   Weak security model
 
-To solve these challenges, a comprehensive, secure, interoperable and
-flexible approach is needed.
+To solve these challenges, a comprehensive, secure, interoperable and flexible approach is needed.
 
 Goals
 =====
 
-1.  Standardize identity representation, bootstrapping, verification, and 
-    validation
+1.  Standardize identity representation, bootstrapping, verification, and validation
 
-1.  Federate application identities across clusters, security-zones and life-cycles
+1.  Federate application identities across clusters, security-zones and life-cycles, while retaining and associating the origin with application identity.
 
 1.  Improve security posture by eliminating static secrets (**password-less**), reducing attack surface and bringing accountability. Trust and dynamic evaluation of trust are the new security anchors for application identity. 
 
 1.  Improve resiliency and reliability by making authentication, access and authorization decision local
 
-1.  Standardize authentication and authorization for User-to-App, App-to-App, 
-    User-to-App-to-App and App-to-App-to-App scenarios
+1.  Standardize authentication and authorization for User-to-App, App-to-App, User-to-App-to-App and App-to-App-to-App scenarios
 
 1.  Achieve interoperability (OAuth2, OIDC, UMA 2.0 etc) and ease of adoption
 
@@ -60,14 +46,11 @@ Goals
 Overview
 ========
 TrustFabric implements security using two layer implementation:
-1. Fabric Layer - Underlay that provides secure application interaction
-2. Session Layer - Optional overlay that provides session information about the request initiator for transaction processing
+1. Fabric Layer - Secure application (app-to-app) interaction, which validates application identity,  origin, and access authorizations
+2. Session Layer - Optional session information about the request initiator for transaction processing over app-to-app interaction
 
 
-TrustFabric leverages JWT based Application Identity and Access Tokens for representing client application identity. Token represents the complete identity of the client application and can be validated locally by target service without external
-interaction/dependencies. Since tokens are short duration tokens,
-renewal will ensure updates on claims are available in the token. All interactions happen over TLS 1.2+ enabled communication.  
-Mutual authentication is achieved by leveraging TLS 1.2 verification based on RFC 6125 for the server and JWT based client identity. Access policies are embedded as claims for the client application, this makes authentication and authorization completely local and eliminates dependencies on external services.
+TrustFabric leverages JWT based Application Identity and Access Tokens for representing client application identity. Token represents the complete identity of the client application (including origin) and can be validated locally by target service without external interaction/dependencies. Since tokens are short duration tokens, renewal will ensure updates on claims are available in the token. All interactions happen over TLS 1.2+ enabled communication. Mutual authentication is achieved by leveraging TLS 1.2 verification based on RFC 6125 for the server and JWT based client identity. Access policies are embedded as claims for the client application, this makes authentication and authorization completely local and eliminates dependencies on external services.
 
 ![](./media/Application-overview.png)
 

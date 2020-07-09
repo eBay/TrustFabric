@@ -72,7 +72,7 @@ Where:
 -   `state` is implementation specific and left as a choice
 -   `redirect_uri` is the pre-registered value of the redirect uri for the client. Value provided must match the configuration. More details will be added later. 
 
-If the delegation is initiated by a application (e.g. infra controller), the controller must initiaute an authenticated request by providing the fabric access token as part of authorization header.
+If the delegation is initiated by a application (e.g. infra controller), the controller must initiate an authenticated request by providing the fabric access token as part of authorization header.
 
 Response
 ```http
@@ -105,10 +105,12 @@ Application Access Tokens
 
 ![](./media/Application-token.png)
 
-Applications must initiate `token` flow using the referral tokens provided.
+Applications must initiate `token` flow using the referral tokens provided. Important distinction here is that the tokens obtained here represent the identity of the client application. OAuth2 semantics used here are for establishing the trust and trust anchors (i.e. access tokens) for client application.
+
+User trusts PaaS operator to inject identity for the application with policy defined access controls. Here User trusting PaaS operator is a OIDC/OAuth2 flow (see trusted session layer below), while PaaS operator providing a bootstrap referral token to an application and application using token end-point to get access token for allowed targets is the fabric layer interaction.
 
 ### Token Endpoint
-
+Token endpoint flow follows the semantics of RFC 6749. The only optional aspect is the client_secret which may be ommited in for bootstrapping application identity. 
 
 
 
