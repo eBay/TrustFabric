@@ -45,25 +45,11 @@ Cluster is a group of compute nodes (VMs, Hosts) where AppInstances are deployed
 
 A workspace will have one or more applications. An application can have one or more AppInstances(deployments), each corresponding to a specific environment. Environment can be hosted using multiple clusters. AppInstance can reside in a cluster, but cluster can host multiple AppInstances.
 
-Applications have characteristics which could include teams, source
-code/image, deployments, interactions etc., these characteristics can be
-used to identify and represent the application components. TrustFabric
-focuses on providing flexible mechanisms for representing applications
-using these characteristics. Application identity is implemented using JWT 
-tokens and provides a consistent representation similar to user identities 
-in OIDC/OAuth2 specification. Application can obtain and use derived 
-identities e.g. Kerberos tokens or X.509 certificates  using TrustFabric identity.
-X.509 certificates are used to represent the server identity. X.50 certificates, 
-Kerberos tokens and JWT tokens maintain one consistent subject representation model 
-based on X.500 directory specifications for distinguished names.
+Applications have characteristics which could include teams, source code/image, deployments, interactions etc., these characteristics can be used to identify and represent the application components. TrustFabric focuses on providing flexible mechanisms for representing applications using these characteristics. Application identity is implemented using JWT tokens and provides a consistent representation similar to user identities in OIDC/OAuth2 specification. Application can obtain and use derived identities e.g. Kerberos tokens or X.509 certificates  using TrustFabric identity. X.509 certificates are used to represent the server identity. X.50 certificates, Kerberos tokens and JWT tokens maintain one consistent subject representation model based on X.500 directory specifications for distinguished names.
 
 Application Subject Representation
 ----------------------------------
-TrustFabric uses the directory naming model based on distinguished names
-to represent application identity subject. Model is based on X.500
-specification and LDAP DN RFC 4514 and RFC 2253. JWT subject (sub)
-claim, X.509 subject and Kerberos principal are represented using this
-naming. Few examples of identity subjects are shown below.
+TrustFabric uses the directory naming model based on distinguished names to represent application identity subject. Model is based on X.500 specification and LDAP DN RFC 4514 and RFC 2253. JWT subject (sub) claim, X.509 subject and Kerberos principal are represented using this naming. Few examples of identity subjects are shown below.
 
 ![](./media/Application-Identity-DN.png)
 
@@ -86,6 +72,17 @@ Quick Note of LDAP DNs:
 Mapping Identities
 ==================
 TrustFabric allows identity creation via mappings. This allows easier and flexible adoption of identity representation in your environment.
+
+Naming
+------
+LDAP DN (distinguished naming) syntax is used for representing the application identities. Objects used for representing application identity can be modelled in many ways. This specification covers two mechanisms as reference.
+1. Mapping based on LDAP
+1. Mapping based on Kubernetes CRDs
+
+Mapping Identities in LDAP
+---------------------------
+LDAP mapping is needed if your organization uses LDAP directories or IdM/IAM systems backed by LDAP directories. LDAP based identity representation makes it easier to achieve federation for application identities and can also be leveraged to build application catalog.
+Please refer to [LDAP Schema section](./LdapSchema.md) for LDAP based identity modelling.
 
 Mapping Identities in Kubernetes
 --------------------------------

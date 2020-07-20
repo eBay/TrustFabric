@@ -1,0 +1,45 @@
+# LDIF to ADD Attributes and Object-classes for TrustFabric LDAP based identity model
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributeTypes: ( 1.3.6.1.4.1.55988.1.2.3.601 NAME 'tf-workspace-id' EQUALITY caseIgnoreMatch SUBSTR caseIgnoreSubstringsMatch SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 DESC 'Identifier for the Business Function/workspace')
+-
+add: attributetypes
+attributeTypes: ( 1.3.6.1.4.1.55988.1.2.3.602 NAME 'tf-application-id' EQUALITY caseIgnoreMatch SUBSTR caseIgnoreSubstringsMatch SYNTAX 1.3.6.1.4.1.1466.115.121.1.15  DESC 'Application Identifier')
+-
+add: attributetypes
+attributeTypes: ( 1.3.6.1.4.1.55988.1.2.3.603 NAME 'tf-app-instance-id' EQUALITY caseIgnoreMatch SUBSTR caseIgnoreSubstringsMatch SYNTAX 1.3.6.1.4.1.1466.115.121.1.15  DESC 'Application Deployment (instance) Identifier')
+-
+add: attributetypes
+attributeTypes: ( 1.3.6.1.4.1.55988.1.2.3.611 NAME 'tf-source-repository' EQUALITY caseExactString SUBSTR caseExactSubstringsMatch SYNTAX 2.5.5.3 DESC 'Source code repository URI')
+-
+add: attributetypes
+attributeTypes: ( 1.3.6.1.4.1.55988.1.2.3.612 NAME 'tf-issue-repository' EQUALITY caseExactString SUBSTR caseExactSubstringsMatch SYNTAX 2.5.5.3 DESC 'Issue tracking system/repository URI')
+-
+add: attributetypes
+attributeTypes: ( 1.3.6.1.4.1.55988.1.2.3.613 NAME 'tf-software-repository' EQUALITY caseExactString SUBSTR caseExactSubstringsMatch SYNTAX 2.5.5.3 DESC 'Software download repository (PKG/Container/ISO repo) URI')
+-
+add: attributetypes
+attributeTypes: ( 1.3.6.1.4.1.55988.1.2.3.614 NAME 'tf-software-image' EQUALITY caseExactString SUBSTR caseExactSubstringsMatch SYNTAX 2.5.5.3 DESC 'Software Image URI for a specific version')
+-
+add: attributetypes
+attributeTypes: ( 1.3.6.1.4.1.55988.1.2.3.615 NAME 'tf-version' EQUALITY caseIgnoreMatch SUBSTR caseIgnoreSubstringsMatch SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 DESC 'Version number string')
+-
+add: attributetypes
+attributeTypes: (1.3.6.1.4.1.55988.1.2.3.621 NAME 'tf-creator' EQUALITY caseIgnoreMatch SUBSTR caseIgnoreSubstringsMatch SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 DESC 'UID of the creator')
+-
+add: attributetypes
+attributeTypes: ( 1.3.6.1.4.1.55988.1.2.3.622 NAME 'tf-maintainers' EQUALITY caseIgnoreMatch SUBSTR caseIgnoreSubstringsMatch SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 DESC 'Group ID of the maintainers')
+-
+add: attributetypes
+attributeTypes: ( 1.3.6.1.4.1.55988.1.2.3.622 NAME 'tf-approvers' EQUALITY caseIgnoreMatch SUBSTR caseIgnoreSubstringsMatch SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 DESC 'Group ID of the approvers')
+-
+add: objectclasses
+objectclasses: ( 1.3.6.1.4.1.55988.1.2.4.101 NAME 'tf-workspace' SUP top STRUCTURAL MUST ( o $ tf-workspace-id ) May ( displayName $ seeAlso $ description $ tf-source-repository $ tf-issue-repository $ tf-creator $ tf-maintainers $ tf-approvers))
+-
+add: objectclasses
+objectclasses: ( 1.3.6.1.4.1.55988.1.2.4.102 NAME 'tf-application' SUP top STRUCTURAL MUST ( ou $ tf-application-id ) May ( displayName $ seeAlso $ description $ tf-source-repository $ tf-software-repository $ tf-issue-repository $ tf-creator $ tf-maintainers $ tf-approvers))
+-
+add: objectclasses
+objectclasses: ( 1.3.6.1.4.1.55988.1.2.4.103 NAME 'tf-app-instance' SUP top STRUCTURAL MUST ( tf-app-instance-id $ l $ tf-version) MAY ( displayName $ seeAlso $ description $ tf-software-repository $ tf-software-image $ tf-issue-repository $ tf-creator $ tf-maintainer $tf-approvers))
+-
