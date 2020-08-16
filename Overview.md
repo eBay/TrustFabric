@@ -7,6 +7,8 @@ TrustFabric is an open-source specification for an application centric Cloud-Nat
 
 TrustFabric is an extension of OAuth2, OIDC specifications and also aligns with Kintara UMA 2.0 specifications. It establishes a strong application identity representation for handling the challenges associated with micro-services, e.g. compromised application identity and credentials, larger attack surface and [confused deputy](https://en.wikipedia.org/wiki/Confused_deputy_problem).
 
+*Note*: Please read the [Terminology](./Terminology.md) section before proceeding.
+
 Challenges
 ==========
 
@@ -31,7 +33,7 @@ Goals
 
 1.  Standardize identity representation, bootstrapping, verification, and validation
 
-1.  Federate application identities across clusters, security-zones and life-cycles,  retaining  the origin with application identity.
+1.  Federate application identities across clusters, security-zones and life-cycles, retaining  the origin with application identity.
 
 1.  Improve security posture by eliminating static secrets (**password-less**), reducing attack surface and bringing accountability. Trust and dynamic evaluation of trust are the new security anchors for application identity. 
 
