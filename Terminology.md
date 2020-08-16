@@ -23,9 +23,9 @@
 
 * **Authorization Server** : The OAuth2/OIDC authorization server is what the user interacts with when an application is requesting access to their account/resources. In OIDC specification, authorization server also serves as Authentication server. Authorization server provides the access token required by the **client** to connect to the **resource server**. Authorization server implements `/token` and `/authorize` end-points. For OIDC authorization server also implements `/userinfo` endpoint.
 
-* **OIDC Provider** : Same as **Authorization Server** specifically in context of OIDC.
+* **OIDC Provider (OP)** : Same as **Authorization Server** specifically in context of OIDC.
 
-* **Scope** : Scopes are identifiers for resources that a client wants to access. This identifier is sent to the OP during an authentication or token request.
+* **Scope** : Scopes are identifiers for resources that a client wants to access. Scopes are identifiers for 'limiting access' to the resources. This identifier is sent to the OIDC Provider (OP) during an authentication or token request.
 
 * **Authorized Presenter** : Authorized Presenter claims `azp` comes from OIDC spec and is actively used in both identity and access tokens by multiple OIDC providers. The `azp` claim contains the *relying-party* identity and it adds authenticity to the end-user *access token* presented by the *relying-party* to the resource server.
 
