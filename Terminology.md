@@ -11,7 +11,7 @@
 
 * **Jobs** : Jobs are applications that are invoked by a pre-defined schedule or events.
 
-* **Resource Owner**: The end user for whom we are requesting identity information. It is the user who performs authentication and provides the concent to client/relying-party to access resources in resource-server. One of the resources they own is their own identity.
+* **Resource Owner**: The end user for whom we are requesting identity information. It is the user who performs authentication and provides the consent to client/relying-party to access resources in resource-server. One of the resources they own is their own identity.
 
 * **User** : Same as **Resource Owner** above.
 
@@ -29,14 +29,14 @@
 
 * **Authorized Presenter** : Authorized Presenter claims `azp` comes from OIDC spec and is actively used in both identity and access tokens by multiple OIDC providers. The `azp` claim contains the *relying-party* identity and it adds authenticity to the end-user *access token* presented by the *relying-party* to the resource server.
 
-* **Authorized Forwarder** : TrustFabric introduces the authorized forwarder claim `azf`. Purpose of the claim is to allow *resource servers* to present resource owner's *access token* to upstream dependencies, these dependencies could be *resource-servers* and need user context to allow access. This is more prevailing use-case in micro-services as monolith *resource service* may be broken into multiple *resource services* with dependencies and requiring resource-owner context. The `azp` claim has to be initiated based on a concent provided by resource-owner during authentication or by any offline mechanism (e.g. Policy allowing delegation).
+* **Authorized Forwarder** : TrustFabric introduces the authorized forwarder claim `azf`. Purpose of the claim is to allow *resource servers* to present resource owner's *access token* to upstream dependencies, these dependencies could be *resource-servers* and need user context to allow access. This is more prevailing use-case in micro-services as monolith *resource service* may be broken into multiple *resource services* with dependencies and requiring resource-owner context. The `azp` claim has to be initiated based on a consent provided by resource-owner during authentication or by any offline mechanism (e.g. Policy allowing delegation).
 
 
 * **Application Fabric Layer** : Virtual representation of a trust established between applications for interactions based on respective identities and audience claims (`aud`) for access.
 
 * **Session Layer** : Represents sessions established by the resource-owner with the applications. Session layer requires application fabric as building block for trusting applications. Session layer is implemented by adding additional claims (e.g. `azf`) and flows to OIDC spec.
 
-* **Authorization Code** : OAuth2 and OIDC present the concept of authorization code grant for *relying-party* to obtain *access tokens* using a code provided by *resource owner* for authorization. Authorization code represents resource-owner's authenticated concent to authorize relying party. TrustFabric distinguishes the code grant for generation of application identities (a.k.a. *Bootstrap code*) as different from resource-owner initiated code-grant (a.k.a. *Authorization Code*). 
+* **Authorization Code** : OAuth2 and OIDC present the concept of authorization code grant for *relying-party* to obtain *access tokens* using a code provided by *resource owner* for authorization. Authorization code represents resource-owner's authenticated consent to authorize relying party. TrustFabric distinguishes the code grant for generation of application identities (a.k.a. *Bootstrap code*) as different from resource-owner initiated code-grant (a.k.a. *Authorization Code*). 
     *   *Authorization code* : Represents *resource-owner* identity and follows OIDC semantics. These are used in session layer of TrustFabric.
     *   *Bootstrap code* : Represents application identity (including relying-party, resource-servers, jobs, etc) in a bootstrap token (JWT), which can be provided by a authorized application (typically infrastructure systems). This is used in the application fabric layer of TrustFabric.
 
