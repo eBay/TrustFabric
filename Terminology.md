@@ -29,7 +29,9 @@
 
 * **Authorized Presenter** : Authorized Presenter claims `azp` as mentioned in OIDC spec and is actively used in both identity and access tokens by multiple OIDC providers. The `azp` claim contains the *relying-party* identity and it adds authenticity to the end-user *access token* presented by the *relying-party* to the resource server.
 
+
 * **Authorized Forwarder** : TrustFabric introduces the authorized forwarder claim `azf`. Purpose of the claim is to allow *resource servers* to present resource owner's *access token* to upstream dependencies, these dependencies could be *resource-servers* and need user context to allow access. This is more prevailing use-case in micro-services as monolith *resource service* may be broken into multiple *resource services* with dependencies and requiring resource-owner context. The `azf` claim has to be initiated based on a consent provided by resource-owner during authentication or by any offline mechanism (e.g. Policy allowing delegation).
+
 
 
 * **Application Fabric Layer** : Virtual representation of a trust established between applications for interactions based on respective identities and audience claims (`aud`) for access.
