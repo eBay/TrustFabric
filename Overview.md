@@ -3,7 +3,7 @@
 Introduction
 ============
 
-TrustFabric is an open-source specification for an application centric Cloud-Native Identity and Access management. It secures interactions between applications and between users and applications.
+TrustFabric is an open-source specification for an application centric Cloud-Native Identity and Access management. It secures interactions between applications and between internal users and applications.
 
 TrustFabric is an extension of OAuth2, OIDC specifications and also aligns with Kintara UMA 2.0 specifications. It establishes a strong application identity representation for handling the challenges associated with micro-services, e.g. compromised application identity and credentials, larger attack surface and [confused deputy](https://en.wikipedia.org/wiki/Confused_deputy_problem).
 
@@ -66,7 +66,7 @@ TrustFabric implementation includes:
     * Client can use user access token to connect to resource services
     * Client must present client JWT tokens to identify itself and to present user token on behalf of user
 * Access claims are embedded in the JWT token, this makes local validation of access possible
-* All the tokens(including client tokens and user access tokens) are short duration tokens
+* All the tokens(including client tokens and user access tokens) are short-lived tokens
 
 
 ![](./media/Application-overview.png)

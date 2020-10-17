@@ -52,7 +52,7 @@ In the token above
 - `inst` is the instance claim and is an array of IP addresses to which this token is issued. These addresses should represent the network identity of the application (`client_id`). Claim can be used to perform the trust verification via reverse lookup for the `token` flow and can also be used to do origin validation during token verification.
 - `vot` and `vom` are the optional vector of trust claims.
 
-In app initiated code code:
+In app initiated code:
 
 ```json
 {
