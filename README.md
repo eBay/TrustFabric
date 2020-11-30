@@ -21,6 +21,8 @@ Security landscape is changing fast. Adoption of micro-services and cloud-native
 1. Holistic approach of IDM/IAM does not exist for applications
 1. Diversity of applications make it harder to standardize
 
+
+## Navigating the Specifications
 Following sections provide a details for the specification:
 
 * [Terminology](./Terminology.md)
