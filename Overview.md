@@ -9,60 +9,30 @@ TrustFabric is an extension of OAuth2, OIDC specifications and also aligns with 
 
 *Note*: Please read the [Terminology](./Terminology.md) section before proceeding.
 
-Challenges
-==========
-
-Enterprises typically have a multitude of heterogeneous applications (a.k.a. services). These applications have different architecture, they speak different protocols, they are built using different programming languages and they have different authentication and access requirements. Enterprises may also have specialized deployment topology, multiple life-cycles and different security zones (e.g. SOX, PCI) for hosting applications.
-
-Summarizing these challenges:
-
--   Multiple Authentication mechanisms
-
--   Lack of standardization for application identity and verification
-
--   Lack of unified policies and rules for access and authorizations
-
--   Scale and time-sensitivity
-
--   Weak security model
-
-To solve these challenges, a comprehensive, secure, interoperable and flexible approach is needed.
-
-Goals
-=====
-
-1.  Standardize identity representation, bootstrapping, verification, and validation
-
-1.  Federate application identities across clusters, security-zones and life-cycles, retaining  the origin with application identity.
-
-1.  Improve security posture by eliminating static secrets (**password-less**), reducing attack surface and bringing accountability. Trust and dynamic evaluation of trust are the new security anchors for application identity. 
-
-1.  Improve resiliency and reliability by making authentication, access and authorization decision local
-
-1.  Standardize authentication and authorization for User-to-App, App-to-App, User-to-App[-to-App]<sup>\+</sup> and App-to-App[-to-App]<sup>\+</sup> scenarios
-
-1.  Achieve interoperability (OAuth2, OIDC, UMA 2.0 etc) and ease of adoption
-
-1.  Provide a reference implementation
-
-Scenarios addressed by TrustFabric are demonstrated below:
-
-![](./media/Application-Usecases.png)
-
-All interactions shown above are protected and can be performed only by designated callers. In addition to designated caller, TrustFabric allows for the context of the operation, that limits the scope of interaction further, eliminating the [confused deputy](https://en.wikipedia.org/wiki/Confused_deputy_problem) problem.
+Challenges and Goals
+===================
+Refer to [Goals](./Goals.md) section.
 
 Overview
 ========
 TrustFabric implements a layered approach for implementing security:
-1. Fabric Layer - Fabric layer secures application (app-to-app) interactions. This is achieved by validating calling application identity,  origin, and access authorizations
-2. Session Layer - Session layer allows the calling party context to be passed as session information to resource services.
+1. Application Fabric Layer
+1. Session layer
 
+## Application Fabric Layer
+Fabric layer secures application (app-to-app) interactions. Fabric layer establishes a web of trusted and allowed transactions, where trust is evaluated continuously (zero-trust principle) and interaction are allowed based on access policies. This is achieved by providing a strong identity to each application which is self contained, non-repudiation and that provides protection against man-in-the-middle attack scenarios (impersonation). Source identity can be verified by the receiving application, locally. Verification includes identity, integrity, access claims, MitM and origin checks. Primary mechanism to establish application fabric layer is using TrustFabric JWT tokens, which leverages OAuth2 semantics. In some cases derived identities (X.509, Kerberos) are also supported (with limitations).
+
+## Session Fabric Layer
+Session layer requires Fabric layer to operate i.e. it assumes that the application identities are already established. Session layer is required when a user/operator session is needed and interactions are performed on-behalf-of users/operator by applications. Session layer allows the user/operator context to be passed as session information to resource services. TrustFabric leverages OpenID Connect (OIDC) specifications to implement session layer.
+
+How TrustFabric works
+---------------------
 TrustFabric implementation includes:
 * Application Identity representation using JWT based tokens. Tokens include application claims, Origin, Trust vectors and access claims. Application Identity represented as JWT can be used to:
     * Represent client identity and use to authenticate application client
-    * Use token to obtain derived credentials e.g. X.509 certificates, Kerberos tokens, SSH keys etc
+    * Use token to obtain derived identities e.g. X.509 certificates, Kerberos tokens, SSH Certs/keys etc
 * Interaction between applications is secured using TLS (Only TLS 1.2 or higher are supported).
-* User identity is delegated to client application via OIDC as a JWT based identity and access tokens
+* User identity is delegated to client application via OpenID Connect (OIDC) as a JWT based identity and access tokens
     * Client can use user access token to connect to resource services
     * Client must present client JWT tokens to identify itself and to present user token on behalf of user
 * Access claims are embedded in the JWT token, this makes local validation of access possible
@@ -76,10 +46,17 @@ Since interactions may be initiated by a user, a job or by an agent, TrustFabric
 ![](./media/TrustFabric-UserSession.png)
 
 ### Fabric of trusted applications
-TrustFabric relies on building a strong fabric for interactions between trusted application. The trusted fabric is built using 
-1.  Encrypted communication with strong server network identity. This is achieved by using TLS 1.2+ with server certificates and RFC 6125 compliant verification. This provides confidentiality and server authentication
-1.  Dynamic, trust aware, transparent, non-repudiable  and MitM safe client application tokens. This is covered in details in the [Identities](./Identity.md) section. This provides the mutual authentication by providing verifiable client application identity to server application
+TrustFabric relies on building a strong fabric for interactions between trusted application. The trusted fabric is (re)built continuously using:
+1. Secured Communication: Encrypted communication using strict TLS 1.2+ compliance
+1. Mutual Authentication
+    1. Strong server identity represented using X.509 certificates with `Server Authentication` ( OID: `1.3.6.1.5.5.7.3.1` ). See [RFC 5280](https://tools.ietf.org/html/rfc5280) for details.
+    1. Strong and verbose client identity using TrustFabric JWT tokens. This includes identity, origin, network and access verification (see [TrustFabric Tokens](./Tokens.md) and [Identities](./Identity.md) for more details).
 1.  Policy based access which is locally verifiable. This is covered in details in [TrustFabric](./TrustFabric.md) and [Interoperability](./InterOp.md) sections.
+    1. Claim based access controls (OAuth2/OIDC and extended scopes/claims)
+    1. HTTP Authorization policies (CRUD and Endpoint policies)
+1.  Identity bootstrapping
+    1. Application Identity bootstrapping
+    1. Using application identity to obtain Server X.509 certificates
 
 This allows secure and trusted communication that is allowed based on policies and best-practices for securing interactions in both private and public network scenarios.   
 *Note: Additional controls like application firewall, network ACL etc might have to be enabled based on security requirements, these controls will be covered by the specification in the future.*
@@ -89,14 +66,7 @@ Application interactions are more complex than simple app-to-app interactions. W
 Specification achieves this by building interoperability and extending profiles for OIDC and OAuth2 specifications. The `azf` claim representing authorized forwarders is introduced. Details are covered in [Tokens](./Tokens.md) and [TrustFabric](./TrustFabric.md) sections.
 
 
-Representing application identity
----------------------------------
 
-Typically, business functions consist of multiple components e.g. Frontend Web/Mobile, Application APIs, databases, agents, jobs etc.  These components are maintained by different teams and typically are a  combination of multiple technologies (micro-services, stateful workloads  etc). Each of these components (a.k.a. applications) can have multiple  deployments (a.k.a. AppInstances) in different zones.
-
-![](./media/Application-Components.png)
-
-Application identity is represented as a JWT tokens, Kerberos tokens or X.509 certificates, where identity subject is represented using LDAP/X.509 Distinguished naming syntax. Application primary method of identification is a JWT token, while Kerberos and X.509 certificates are used to represent derived and network service identities.
 
 Ecosystem: OIDC, OAuth2, UMA and TrustFabric
 ---------------------------------------

@@ -50,7 +50,7 @@ add: objectclasses
 objectclasses: ( 1.3.6.1.4.1.55988.1.2.4.102 NAME 'tf-application' SUP top STRUCTURAL MUST ( ou $ tf-application-id ) May ( displayName $ seeAlso $ description $ tf-source-repository $ tf-software-repository $ tf-issue-repository $ tf-creator))
 -
 add: objectclasses
-objectclasses: ( 1.3.6.1.4.1.55988.1.2.4.103 NAME 'tf-app-instance' SUP top STRUCTURAL MUST ( tf-app-instance-id $ l $ tf-version) MAY ( displayName $ seeAlso $ description $ tf-software-repository $ tf-software-image $ tf-issue-repository $ tf-creator))
+objectclasses: ( 1.3.6.1.4.1.55988.1.2.4.103 NAME 'tf-app-instance' SUP top STRUCTURAL MUST ( cn $ tf-app-instance-id $ l $ tf-version) MAY ( displayName $ seeAlso $ description $ tf-software-repository $ tf-software-image $ tf-issue-repository $ tf-creator))
 -
 add: objectclasses
 objectclasses: ( 1.3.6.1.4.1.55988.1.2.4.201 NAME 'tf-am-baseroles' SUP top AUXILIARY MAY (  tf-maintainer $ tf-approvers $ tf-owners))
