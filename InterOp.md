@@ -151,7 +151,7 @@ OIDC Code Grant Flow
 --------------------
 
 ### User based delegation
-User based delegation to client application is done using `/authorize` endpoint, after user is authentication. Authentication processor (e.g. SSO) will invoke authorization code grant flow.
+User based delegation to client application is done using `/authorize` endpoint, after user is authenticated successfully. Authentication processor (e.g. SSO) will invoke authorization code grant flow.
 ```http
   GET /authorize?
     response_type=code
