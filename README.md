@@ -4,7 +4,7 @@
 
 TrustFabric is an extensible Cloud Native Identity Specification for Applications. Specification includes:
 
-* Application Identity Representation
+* Application (a.k.a. Service) Identity Representation
 * Application Identity Association
 * Application Identity Verification (Authentication)
 * Application Authorizations and Verification mechanisms
@@ -14,9 +14,9 @@ TrustFabric is an extensible Cloud Native Identity Specification for Application
 
 ## Why we needed yet another specification
 Security landscape is changing fast. Adoption of micro-services and cloud-native technology has changed the threat landscape. Here are few challenges
-1. Services interact with each other and they need an identity
-1. Service impersonation is a new attack vector
-1. Service security is still dependent on static credentials 
+1. Applications (a.k.a. Services) interact with each other and they need an identity
+1. Application impersonation is a new attack vector
+1. Application security is still dependent on static credentials 
 1. **Confused deputy** is new attack dimension with micro-services
 1. Holistic approach of IDM/IAM does not exist for applications
 1. Diversity of applications make it harder to standardize
