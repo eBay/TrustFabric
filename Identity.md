@@ -3,9 +3,9 @@
 * [Identity Naming](#identity-naming)
 * [User Identity](./identity/Users.md)
 * [Application Identity](./identity/Applications.md)
-  * LDAP Representation
-  * Kubernetes Model
-* Mapping Identities in your environment
+  * [LDAP Representation](identity/LDAP.md)
+  * [Kubernetes Model](identity/K8S.md)
+* [Mapping Identities in your environment](identity/Mapping.md)
 
 ## Identity Naming
 
@@ -28,22 +28,3 @@ Quick Note of LDAP DNs:
 1. In LDAP each RDN value corresponds to a object with components being attribute/value pair of that object. Object may have more attribute/values pairs and the object is created as composition of multiple object-classes (just like OOP).
 
 *Use of LDAP Directory is completely optional and in many cases not required*.
-
-## Mapping Identities
-
-TrustFabric allows identity creation via mappings. This allows easier and flexible adoption of identity representation in your environment.
-
-### Mapping Identities in LDAP
-
-LDAP mapping is needed if your organization uses LDAP directories or IdM/IAM systems backed by LDAP directories. LDAP based identity representation makes it easier to achieve federation for application identities and can also be leveraged to build application catalog.
-Please refer to [LDAP Schema section](./LdapSchema.md) for LDAP based identity modelling.
-
-### Mapping Identities in Kubernetes
-
-In Kubernetes following objects are available for mapping applications:
-
-1. Clusters
-1. Namespaces
-1. Deployments (including `deplpoyment`, `rc`, `statefulset` etc.)
-
-**Important**: TrustFabric is a federated implementation for application and user identities. Based on your implementation, additional controls may be required to implement unique identities across a multi-cluster Kubernetes infrastructure.
