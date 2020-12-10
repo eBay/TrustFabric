@@ -2,11 +2,13 @@
 
 ## Applications vs Services
 
-**Note**: *Before you begin, in this specification terms <u>Application</u> and <u>Service</u> are used interchangeably, specification applies to <u>both</u>. This specification follows the definition as proposed by Jacob Jenkov [here](http://tutorials.jenkov.com/soa/services-applications.html)*
+**Note**: *This specification follows the definition as proposed by Jacob Jenkov [here](http://tutorials.jenkov.com/soa/services-applications.html)*
 
 * Applications are accessed by users and may be accessed by other programs over network
 * Services are accessed by programs and may be accessed by users over network
 * In cloud-native world, both applications and services perform specialized operations.
+
+In this specification terms <u>Application</u> and <u>Service</u> are used interchangeably, specification applies to <u>both</u>.
 
 ## What is TrustFabric
 
