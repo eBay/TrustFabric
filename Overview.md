@@ -58,7 +58,8 @@ TrustFabric relies on building a strong fabric for interactions between trusted 
     1. Application Identity bootstrapping
     1. Using application identity to obtain Server X.509 certificates
 
-This allows secure and trusted communication that is allowed based on policies and best-practices for securing interactions in both private and public network scenarios.   
+This allows secure and trusted communication that is allowed based on policies and best-practices for securing interactions in both private and public network scenarios.
+   
 *Note: Additional controls like application firewall, network ACL etc might have to be enabled based on security requirements, these controls will be covered by the specification in the future.*
 
 ### Managing Sessions End-to-End
@@ -73,7 +74,7 @@ Ecosystem: OIDC, OAuth2, UMA and TrustFabric
 
 OAuth2 is the center of the universe in the TrustFabric specification. While OIDC and UMA extend the OAuth2 by providing specificity around authentication and user managed access aspects. TrustFabric extends the ecosystem for
 
-- identity and authentication of applications (clients, resource services etc)
+- Identity and Authentication of applications (clients, resource services etc)
 - Access and Authorization for app-to-app interactions
 - Extends relying-party delegation to resource services as well, which allows user context to be forwarded across micro-services in a controlled and secure manner.
 - Extending UMA2 User managed access model to be extended to applications/services and controllers, where an infrastructure pass service may grant an infrastructure operator/job an access to resources it owns (based on policy).
@@ -90,10 +91,10 @@ TrustFabric components are implemented as combination of federated and distribut
 
 -   Federated Identity Stores (Application, Users, Groups, Zones)
 
--   Federated Policy Store (Admission, User-App, App-App,
+-   Federated Policy Stores (Admission, User-App, App-App,
     User-Resource,..)
 
--   Authentication and token services (OIDC, OAuth2, LDAP, KDC)
+-   Authentication and Token Services (OIDC, OAuth2, LDAP, KDC)
 
 -   Key and Certificate Services/Agents
 
@@ -104,7 +105,7 @@ TrustFabric components are implemented as combination of federated and distribut
 -   Admission Webhooks
 
 -   Application Specific Sidecars 
-    -   Identity, access token refresh and delivery
+    -   Identity, Access token refresh and delivery
     -   Verification of Caller Identity and Claims
 
 Standards and Specifications

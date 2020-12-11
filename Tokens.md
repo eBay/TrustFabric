@@ -7,11 +7,11 @@ TrustFabric specification provides model for:
 
 ## Tokens for Fabric of Trusted Applications
 
-TrustFabric implements three tokens for fabric layer:
+TrustFabric implements three kinds of tokens for fabric layer:
 
-1. Bootstrap token (a.k.a. Referral tokens)
+1. Bootstrap token (a.k.a. Referral token)
 1. Access token
-1. Refresh tokens
+1. Refresh token
 
 **Note**:While tokens establish the client identity, specification supports X.509 certificates for TLS termination and network identity of server. Specification also supports *derived* authentication credentials e.g. Kerberos tokens for client authentication. Derived authentication credentials are obtained by using the  access tokens.
 
@@ -353,7 +353,7 @@ Following schemes are recommended
 
 *Note*: Ed25519 has better overall performance characteristics, but it was not NIST approved. It is also an optional algorithm for JWS/JWT. It has also been approved in the draft of the FIPS 186-5 standard.
 
-### Other Supported Mechanism
+### Other Supported Mechanisms
 
 Following JWT signing schemes are supported, but not recommended based on performance and security requirements:
 
@@ -364,7 +364,7 @@ Following JWT signing schemes are supported, but not recommended based on perfor
    1. ES256 - ECDSA using P-256 curve and SHA-256 hash algorithm 
    2. ES384 - ECDSA using P-384 curve and SHA-384 hash algorithm
 
-**Note**: The digital signature algorithms provide *Integrity, Authenticity and non-repudiation* characteristics to the tokens. They do not provide confidentiality, which makes them unsuitable for sessions and for user tokens requiring confidentiality.
+**Note**: The digital signature algorithms provide *Integrity, Authenticity and Non-Repudiation* characteristics to the tokens. They do not provide confidentiality, which makes them unsuitable for sessions and for user tokens requiring confidentiality.
 
 ### Prohibited
 

@@ -19,13 +19,13 @@ Some of the important observations that can be concluded from these interactions
 
 # Goals
 
-1. Elimination static credentials to reduce impersonation related exposure
+1. Elimination of static credentials to reduce impersonation related exposure
 1. Implement mechanism in the service identity to eliminate man-in-the-middle (MitM) compromises
 1. Implement non-repudiation safeguards in the service identity
-1. Embrace zero-trust model and (re)establish trust for service identity continuously.
+1. Embrace zero-trust model and (re)establish trust for service identity continuously
 1. Standardize identity representation, bootstrapping, verification, and validation
-1. Implement a federated identity model representing application/service, while retaining deployment specific attributes.
+1. Implement a federated identity model representing application/service, while retaining deployment specific attributes
 1. Improve resiliency and reliability by making authentication, access and authorization decision local
 1. Standardize authentication and authorization for User-to-App, App-to-App, User-to-App[-to-App]+ and App-to-App[-to-App]+ scenarios
-1. Achieve interoperability (OAuth2, OIDC, UMA 2.0 etc) and ease of adoption
+1. Achieve interoperability (OAuth2, OIDC, UMA 2.0 etc.) and ease of adoption
 1. Support extensibility for application specific integration requirements

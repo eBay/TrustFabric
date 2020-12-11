@@ -3,7 +3,7 @@ TrustFabric specification for user identities applies to your OpenID Connect imp
 
 ## BYO IdM
 
-TrustFabric allows you to leverage your existing investments in to the IdM solutions. You can continue to leverage existing implementation. TrustFabric provides specifications for OpenID Connect server for integration:
+TrustFabric allows you to leverage your existing investments in IdM solutions. You can continue to leverage existing implementation. TrustFabric provides specifications for OpenID Connect server for integration:
 1. Implement application identities (`client-id`) in a password-less manner using Fabric layer
 2. Implement `azf` claims if you want to support multi-party delegation (transitive delegation)
 3. Extend the scope and claims based on TrustFabric specifications for claims based authorization
