@@ -1,25 +1,25 @@
 # Terminology
 
-* **Application** : Application represents a computer program that interact over network and perform a set of designed functions.
+* **Application** : Application represents a computer program that interacts over a network and performs a set of designed functions.
 
-    * <u>Applications vs Services</u> : Applications mostly allow interactive access with a human actor, but may also provide non-interactive actions and interactions with other services.  Jacob Jenkov provided a good guideline for differentiating applications and services [here](http://tutorials.jenkov.com/soa/services-applications.html).
+    * <u>Applications vs Services</u> : Applications mostly allow interactive access with a human actor, but may also provide non-interactive actions and interactions with other services.  *Jacob Jenkov* provided a good guideline for differentiating applications and services [here](http://tutorials.jenkov.com/soa/services-applications.html).
 
-    * <u>Note</u>: Although the term application and service are used interchangeably in this document, TrustFabric uses *Application* as a standard term.  
+    <u>Note</u>: Although the term application and service is used interchangeably in this document, TrustFabric uses *Application* as a standard term.  
 
-* **Operators** : Operators are applications build to automate actions of a human operator. Typical example includes a mysql operator, that may perform lifecycle management aspects of a mysql database, just like a DBA.
+* **Operators** : Operators are applications built to automate actions of a human operator. Typical example includes a mysql operator, that may perform lifecycle management aspects of a mysql database, just like a DBA.
 
 
 * **Jobs** : Jobs are applications that are invoked by a pre-defined schedule or events.
 
-* **Resource Owner**: The end user for whom we are requesting identity information. It is the user who performs authentication and provides the consent to client/relying-party to access resources in resource-server. One of the resources they own is their own identity.
+* **Resource Owner**: The end user for whom a client application is requesting identity information. It is the user who performs authentication and provides the consent to client/relying-party to access resources in resource-server. One of the resources they own is their own identity.
 
 * **User** : Same as **Resource Owner** above.
 
-* **Relying Party** :  The client application that supports OAuth 2.0 and relies on the OpenID provider to authenticate the end user and request claims about that user. Client (a.k.a relying party) obtains the authorization from the *resource owner*, which is identified using the `authorized presenter` claim in OIDC.
+* **Relying Party** :  The client application that supports OAuth 2.0 and relies on the OpenID provider to authenticate the end user and request claims about that user. Client (a.k.a relying party) obtains the authorization from the *resource owner*, which is identified using the `authorized party(azp)` claim in OIDC.
 
 * **Client** : Same as **Relying Party**.
 
-* **Resource Server** : Resource server is API server that can be used to access the user's information or user's resources. It has the capability of accepting and responding to protected resource requests with the help of access tokens. In TrustFabric implementation, *resource server* may also act as *relying party* in a multi-step transaction where resource-server may obtain the delegation grants based on `authorized forwarder` claim.
+* **Resource Server** : Resource server is API server that can be used to access the user's information or user's resources. It has the capability of accepting and responding to protected resource requests with the help of access tokens. In TrustFabric implementation, *resource server* may also act as *relying party* in a multi-step transaction where resource-server may obtain the delegation grants based on `authorized forwarder(azf)` claim.
 
 * **Authorization Server** : The OAuth2/OIDC authorization server is what the user interacts with when an application is requesting access to their account/resources. In OIDC specification, authorization server also serves as Authentication server. Authorization server provides the access token required by the **client** to access the protected resources hosted in **resource server**. Authorization server implements `/token` and `/authorize` end-points. For OIDC authorization server also implements `/userinfo` endpoint.
 
@@ -27,12 +27,9 @@
 
 * **Scope** : Scopes are identifiers for resources that a client wants to access. Scopes are identifiers for 'limiting access' to the resources. This identifier is sent to the OIDC Provider (OP) during an authentication or token request.
 
-* **Authorized Presenter** : Authorized Presenter claims `azp` as mentioned in OIDC spec and is actively used in both identity and access tokens by multiple OIDC providers. The `azp` claim contains the *relying-party* identity and it adds authenticity to the end-user *access token* presented by the *relying-party* to the resource server.
-
+* **Authorized Party** : Authorized Party claim `azp` as mentioned in OIDC spec and is actively used in both identity and access tokens by multiple OIDC providers. The `azp` claim contains the *relying-party* identity and it adds authenticity to the end-user *access token* presented by the *relying-party* to the resource server.
 
 * **Authorized Forwarder** : TrustFabric introduces the authorized forwarder claim `azf`. Purpose of the claim is to allow *resource servers* to present resource owner's *access token* to upstream dependencies, these dependencies could be *resource-servers* and need user context to allow access. This is more prevailing use-case in micro-services as monolith *resource service* may be broken into multiple *resource services* with dependencies and requiring resource-owner context. The `azf` claim has to be initiated based on a consent provided by resource-owner during authentication or by any offline mechanism (e.g. Policy allowing delegation).
-
-
 
 * **Application Fabric Layer** : Virtual representation of a trust established between applications for interactions based on respective identities and audience claims (`aud`) for access.
 

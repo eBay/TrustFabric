@@ -1,6 +1,6 @@
 # Interactions and Interoperability
 
-TrustFabric separates the interactions in two layer. First layer is *trusted underlay*, which is a fabric of trusted applications, while the second layer is *trusted overlay* which represents the session aspect of interactions initiated by users and apps via delegation of authorization.
+TrustFabric separates the interactions in two layers. First layer is *trusted underlay*, which is a fabric of trusted applications, while the second layer is *trusted overlay* which represents the session aspect of interactions initiated by users and apps via delegation of authorization.
 
 ## Building Fabric of trusted applications (Underlay)
 
@@ -9,7 +9,7 @@ Establishing a trusted fabric of applications (i.e. Underlay) is done in two ste
 1. Establishing application identity and,
 2. Establishing access patterns
 
-The application identity is established by injecting code-grant via bootstrapping mechanism (bootstrap/referral token). Application can now use the code-grant to obtain the identity and access token using `token` endpoint of the authorization server.
+The application identity is established by injecting code-grant via bootstrapping mechanism (bootstrap/referral token). Application can now use the code-grant to obtain the identity and access token using `/token` endpoint of the authorization server.
 
 
 ### Bootstrapping Application Identity

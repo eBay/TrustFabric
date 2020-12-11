@@ -6,24 +6,24 @@
 
 * Applications are accessed by users and may be accessed by other programs over network
 * Services are accessed by programs and may be accessed by users over network
-* In cloud-native world, both applications and services perform specialized operations.
+* In cloud-native world, both applications and services perform specialized operations
 
-In this specification terms <u>Application</u> and <u>Service</u> are used interchangeably, specification applies to <u>both</u>.
-
+In this specification, terms <u>Application</u> and <u>Service</u> are used interchangeably, and this specification applies to <u>both</u>.
+ 
 ## What is TrustFabric
 
 TrustFabric is an extensible Cloud Native Identity Specification for Applications. Specification includes:
 
-* Application (a.k.a. Service) Identity Representation and Identity injection
-* Application Identity Verification (Authentication) and Authorizations
-* Identity revocation and invalidation
+* Application (a.k.a. Service) Identity Representation and Identity Injection
+* Application Identity Verification (Authentication) and Authorization
+* Identity Revocation and Invalidation
 * Interoperability and Extensibility
 
-## Why we needed yet another specification
+## Why yet another specification?
 
 Security landscape is changing fast. Adoption of micro-services and cloud-native technology has changed the threat landscape. Here are few challenges:
 
-1. Applications (a.k.a. Services) interact with each other and they need an identity
+1. Applications (a.k.a. Services) require an identity when interacting with each other
 1. Application impersonation is a new attack vector
 1. Application security is still dependent on static credentials 
 1. **Confused deputy** is new attack dimension with micro-services
@@ -35,7 +35,7 @@ Security landscape is changing fast. Adoption of micro-services and cloud-native
 Following sections provide a details for the specification:
 
 * [Terminology](./Terminology.md)
-* [Goals](/Goals.md)
+* [Goals](./Goals.md)
 * [Overview](./Overview.md)
 * [Fabric of Trusted Applications](./TrustFabric.md)
 * [Architecture](./Architecture.md)

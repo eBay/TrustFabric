@@ -2,7 +2,7 @@
 
 Most significant aspect of TrustFabric specification is modeling of identities for Cloud Native Applications. Identity model plays a critical role in establishing a secure fabric for application interactions.
 
-## Modelling application identity
+## Modelling Application Identity
 
 Typically, business functions consist of multiple components e.g. Frontend Web/Mobile, Application APIs, databases, agents, jobs etc.  These components are maintained by different teams and typically are a  combination of multiple technologies (micro-services, stateful workloads  etc). Each of these components (a.k.a. applications) can have multiple  deployments (a.k.a. AppInstances) in different zones.
 
@@ -54,7 +54,7 @@ Key aspects to note:
 
 1. Workspace is optional. If present must be unique under tenant domain
 1. Application name must be unique under workspace. If workspace is missing, it should be unique for the tenant domain 
-1. Tenant domain component is will vary for each enterprise. Avoid using multiple tenant domains in your deployment as it provides a strict and less flexible isolation
+1. Tenant domain component will vary for each enterprise. Avoid using multiple tenant domains in your deployment as it provides a strict and less flexible isolation
 1. Adding `dc=apps` and `dc=users` can be a good practice to isolate apps and users under tenant `dc=acme,dc=com`
 
 ## Representing Identities

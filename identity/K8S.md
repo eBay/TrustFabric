@@ -11,7 +11,7 @@ Kubernetes CRD models include following objects:
 
 1. `Workspace` kind represents the workspace type. 
 2. `Application` kind represents the component that is `part-of` the `workspace`
-3. `AppInstance` kind represents the deployment (links to Kubernetes `deployment`, `statefulset`, `rc` etc.) that s `instance-of` the `Application` and has and `environment` identifier.
+3. `AppInstance` kind represents the deployment (links to Kubernetes `deployment`, `statefulset`, `rc` etc.) that is `instance-of` the `Application` and has an `environment` identifier.
 
 ### Examples
 
