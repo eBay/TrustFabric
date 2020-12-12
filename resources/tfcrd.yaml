@@ -1,0 +1,126 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: workspace.tf.ebay.com
+spec:
+  # group name to use for REST API: /apis/<group>/<version>
+  group: tf.ebay.com
+  # list of versions supported by this CustomResourceDefinition
+  versions:
+    - name: v1
+      served: true
+      storage: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              properties:
+                workspaceId:
+                  type: string
+                source:
+                  type: string
+                tracking:
+                  type: string
+                gropRef:
+                  type: string
+                owner:
+                  type: string
+  # either Namespaced or Cluster
+  scope: Cluster
+  names:
+    # plural name to be used in the URL: /apis/<group>/<version>/<plural>
+    plural: workspaces
+    # singular name to be used as an alias on the CLI and for display
+    singular: workspace
+    # kind is normally the CamelCased singular type. Your resource manifests use this.
+    kind: WorkSpace
+    # shortNames allow shorter string to match your resource on the CLI
+    shortNames:
+      - ws
+
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: application.tf.ebay.com
+spec:
+  # group name to use for REST API: /apis/<group>/<version>
+  group: tf.ebay.com
+  # list of versions supported by this CustomResourceDefinition
+  versions:
+    - name: v1
+      served: true
+      storage: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              properties:
+                component:
+                  type: string
+                applicationId:
+                  type: string
+                partOf:
+                  type: string
+                dataClassification:
+                  type: array
+                  items:
+                    type: string
+  # either Namespaced or Cluster
+  scope: Cluster
+  names:
+    # plural name to be used in the URL: /apis/<group>/<version>/<plural>
+    plural: applications
+    # singular name to be used as an alias on the CLI and for display
+    singular: application
+    # kind is normally the CamelCased singular type. Your resource manifests use this.
+    kind: Application
+    # shortNames allow shorter string to match your resource on the CLI
+    shortNames:
+      - app
+
+---
+
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: applicationinstance.tf.ebay.com
+spec:
+  # group name to use for REST API: /apis/<group>/<version>
+  group: tf.ebay.com
+  # list of versions supported by this CustomResourceDefinition
+  versions:
+    - name: v1
+      served: true
+      storage: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              properties:
+                instanceId:
+                  type: string
+                environment:
+                  type: string
+                cluster:
+                  type: string
+                instanceOf:
+                  type: string
+  # either Namespaced or Cluster
+  scope: Cluster
+  names:
+    # plural name to be used in the URL: /apis/<group>/<version>/<plural>
+    plural: applicationinstances
+    # singular name to be used as an alias on the CLI and for display
+    singular: applicationinstance
+    # kind is normally the CamelCased singular type. Your resource manifests use this.
+    kind: ApplicationInstance
+    # shortNames allow shorter string to match your resource on the CLI
+    shortNames:
+      - ai
