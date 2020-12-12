@@ -3,7 +3,7 @@
 * [Identity Naming](#identity-naming)
 * [User Identity](./identity/Users.md)
 * [Application Identity](./identity/Applications.md)
-  * [LDAP Representation](identity/LDAP.md)
+  * [LDAP Representation](identity/LdapSchema.md)
   * [Kubernetes Model](identity/K8S.md)
 * [Mapping Identities in your environment](identity/Mapping.md)
 

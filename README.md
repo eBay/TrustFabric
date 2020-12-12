@@ -8,7 +8,7 @@
 * Services are accessed by programs and may be accessed by users over network
 * In cloud-native world, both applications and services perform specialized operations
 
-In this specification, terms <u>Application</u> and <u>Service</u> are used interchangeably, and this specification applies to <u>both</u>.
+**Note**: Although the term application and service is used interchangeably in this document, TrustFabric uses *Application* as a standard term. The specification applies to both.
  
 ## What is TrustFabric
 
@@ -43,7 +43,8 @@ Following sections provide a details for the specification:
 * [Tokens and Validations](./Tokens.md)
 * [Interactions and Protocol](./InterOp.md)
 * [LDAP Integration](./LdapSchema.md)
-* Service Mesh Integration
+* [Integration](Integrations.md) - GRPC, Envoy, Service Mesh, Generics and more
+* [Identity Protection](StrongIdentity.md) - MitM, Confused deputy, replay attacks
 * FAQ
 
 

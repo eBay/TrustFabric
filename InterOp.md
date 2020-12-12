@@ -60,7 +60,7 @@ Where:
 
 - `code` is a JWT based code-grant define in [Tokens](./Tokens.md) section.
 
-Error response must follow OAth2 code grant sematic defined in [RFC 6749](https://tools.ietf.org/html/rfc6749)
+Error response must follow OAuth2 code grant sematic defined in [RFC 6749](https://tools.ietf.org/html/rfc6749)
 
 
 ### Back Channel Controller
@@ -147,12 +147,11 @@ Authorization may be required between authentication and authorization endpoint 
 ### Application based delegation
 Application based delegation is similar to user based delegation, only difference is the requirement of fabric layer access token for initiator application, and authorization to access the authorization endpoint.
 
-### Claims
-TBD
+### Scope and Claims
 
+Scope and Claims provides integration for roles and entitlements. Specification intends to extend standard OpenID Connect scopes. This section will be updated in future iterations of the specification.
 
-Tokens Flow
------------
+## Tokens Flow
 
 ### Token endpoint
 
@@ -161,21 +160,3 @@ Tokens Flow
 #### Capturing Delegation
 
 #### Capturing Session Forwarding on Underlay
-
-
-Integrations
-============
-
-HTTPS Integrations
---------------------
-
-### Envoy Integration
-
-### Istio Integration
-
-
-GRPC Based Integration
------------------------
-
-SASL Integration
-----------------

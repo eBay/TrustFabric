@@ -61,6 +61,6 @@ Key aspects to note:
 
 Specification supports application identity representation in following systems:
 
-1. [LDAP Directory](./LDAP.md)
+1. [LDAP Directory](./LdapSchema.md)
 2. [Kubernetes](./K8S.md)
 
