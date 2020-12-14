@@ -7,16 +7,18 @@ Specification intends to provide following Integrations:
 3. Integration for Generic applications supporting SASL
 4. Integration for Service Mesh
 
-### HTTPS Integration
+**Road-map** : Specification will cover the specifics in the next iteration.
+
+## HTTPS Integration
 
 ### Direct application Integration (SDK)
 
 ### Envoy Integration
 
+## gRPC Based Integration
+
+## SASL Integration
+
+## Service Mesh Integrations
+
 ### Istio Integration
-
-Specification will cover the specifics in the next iteration.
-
-### gRPC Based Integration
-
-### SASL Integration
