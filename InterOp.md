@@ -149,16 +149,16 @@ User based delegation to client application is done using `/authorize` endpoint,
 ```
 Authorization may be required between authentication and authorization endpoint (if hosted separately), in such a case fabric layer client access token can be used as bearer token in the authorization header (`client_secret`).
 
-### Application based delegation
-Application based delegation is similar to user based delegation, the only difference being the requirement of fabric layer access token for initiator application and authorization to access the authorization endpoint.
-
 ### Scope and Claims
 
 Scope and Claims provide integration for roles and entitlements. This specification intends to extend the standard OpenID Connect scopes. This section will be updated in future iterations of the specification.
 
 Tokens Flow
 --------------------
-The code grant is exchanged for user access token after a successful authentication. This token is issued for a relying party and will have the user access claims. Access token  is issued via the endpoint `/token`.
+The code grant is exchanged for user access token after a successful authentication. This token is issued for a relying party and will have the user access claims. 
+`/token` endpoint will issue both Access Token and ID Token after successful validation of the Code grant. Access token can contain claims if the `/authorize` request has custom scopes. These claims can be validated and used for authorization on the resource server. The ID Token is a security token which contains Claims about the Authenticated User.
+
+Code grant token flow:
 ```http
   GET /token?
     grant_type= authorization_code
@@ -167,7 +167,7 @@ The code grant is exchanged for user access token after a successful authenticat
   Host: server.acme.org
   Authorization: bearer client_secret
 ```
-Refresh token flow also follows [RFC 6749](https://tools.ietf.org/html/rfc6749):
+Refresh token flow:
 ```http
      POST /token HTTP/1.1
      Host: server.acme.org
@@ -180,10 +180,18 @@ Refresh token flow also follows [RFC 6749](https://tools.ietf.org/html/rfc6749):
   Authorization: bearer client_secret
 ```
 
+Access token Response:
+```
+HTTP/1.1 200 OK
+Content-Type: application/json
+{
+   "access_token": [...omitted for brevity...],
+   "id_token": [...omitted for brevity...],
+   "refresh_token": [...omitted for brevity...],
+   "token_type": "Bearer",
+   "expires_in": 3600,
+}
+```
+
 #### Interactions
-Session access token should be treated as a JWT bearer token. The authorized party(`azp`) in this token represents the client application. Fabric layer Access tokeen  can be used as the `client_secret` for this flow.
-
-
-#### Capturing Delegation
-
-#### Capturing Session Forwarding on Underlay
+Session access token should be treated as a JWT bearer token. The authorized party(`azp`) in this token represents the client application. Fabric layer Access token  can be used as the `client_secret` for this flow.
