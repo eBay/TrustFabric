@@ -24,7 +24,7 @@ As part of referral identity injection, application deployment is provided with 
 TrustFabric leverages OAuth2 to implement token request flows. *It is important to note that the token interaction produces access tokens with application's identity and not the tokens for delegated access*. Identity, subject and access claims embedded in the token are for the application. Unlike OIDC, there are no separate identity tokens. The access token is implemented as a transparent token using JWT and can be used as application identity token (has identity claims embedded). The referral tokens are treated as code-grant issued by DevOps or by Operators. Code-grant delivery can be done via 
 
 - OAuth2 code-grant flow
-- Back-channel i.e. Direct injection to application (e.g. Via secrets in Kubernetes)
+- Back-channel i.e. Direct injection to application (e.g. via secrets in Kubernetes)
 
 #### OAuth2 Authorization Code Flow
 
@@ -107,7 +107,7 @@ Please refer to [RFC 6749 Section 4.1.3](https://tools.ietf.org/html/rfc6749#sec
 
 Note: Consider PKCE specification.
 
-Refresh token flow also follows RFC 6749:
+Refresh token flow also follows [RFC 6749](https://tools.ietf.org/html/rfc6749):
 ```http
      POST /token HTTP/1.1
      Host: server.acme.org
@@ -156,11 +156,33 @@ Application based delegation is similar to user based delegation, the only diffe
 
 Scope and Claims provide integration for roles and entitlements. This specification intends to extend the standard OpenID Connect scopes. This section will be updated in future iterations of the specification.
 
-## Tokens Flow
+Tokens Flow
+--------------------
+The code grant is exchanged for user access token after a successful authentication. This token is issued for a relying party and will have the user access claims. Access token  is issued via the endpoint `/token`.
+```http
+  GET /token?
+    grant_type= authorization_code
+    &code=[...omitted for brevity...]
+    &client_id=[...omitted for brevity...]
+  Host: server.acme.org
+  Authorization: bearer client_secret
+```
+Refresh token flow also follows [RFC 6749](https://tools.ietf.org/html/rfc6749):
+```http
+     POST /token HTTP/1.1
+     Host: server.acme.org
+     Content-Type: application/x-www-form-urlencoded
 
-### Token endpoint
+     grant_type=refresh_token
+     &refresh_token=[...omitted for brevity...]
+     &client_id=[...omitted for brevity...]
+  Host: server.acme.org
+  Authorization: bearer client_secret
+```
 
 #### Interactions
+Session access token should be treated as a JWT bearer token. The authorized party(`azp`) in this token represents the client application. Fabric layer Access tokeen  can be used as the `client_secret` for this flow.
+
 
 #### Capturing Delegation
 
