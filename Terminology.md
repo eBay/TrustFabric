@@ -40,9 +40,9 @@
     *   *Bootstrap code* : Represents application identity (including relying-party, resource-servers, jobs, etc) in a bootstrap token (JWT), which can be provided by an authorized application (typically infrastructure systems). This is used in the application fabric layer of TrustFabric.
 
 * **Access Token** : Access tokens are bearer token presented by application or relying-party to gain access to resource-server.
-    *   *Application Access Tokens* : Represents the self identity (application). The `sub` claim represents self identity and `aud` claim represents target applications this subject can interact with.
-    *   *User Access Tokens* : These are access token given to relying party by the user as an authorization. The `sub` claim represents the `resource owner`, while `azp` claim represents the relying-party/client identity. Similarly `azf` claim represents the applications that can present the access token on behalf of the user.
+    *   *Application Access Token* : Represents the self identity (application). The `sub` claim represents self identity and `aud` claim represents target applications this subject can interact with.
+    *   *User Access Token* : These are access token given to relying party by the user as an authorization. The `sub` claim represents the `resource owner`, while `azp` claim represents the relying-party/client identity. Similarly `azf` claim represents the applications that can present the access token on behalf of the user.
 
 * **Refresh Token** : Token that can be used by client or application to refresh the access token. Just like access token, there are two kinds of refresh tokens:
     *   *Application Refresh Token* : Refresh token for application identity
-    *   *User refresh token* : Refresh token for user access token
+    *   *User Refresh token* : Refresh token for user access token
