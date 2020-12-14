@@ -38,13 +38,12 @@ Following sections provide a details for the specification:
 * [Goals](./Goals.md)
 * [Overview](./Overview.md)
 * [Fabric of Trusted Applications](./TrustFabric.md)
+* [Interactions and Protocol](./InterOp.md)
 * [Architecture](./Architecture.md)
 * [Identity Representation](./Identity.md)
 * [Tokens and Validations](./Tokens.md)
-* [Interactions and Protocol](./InterOp.md)
-* [LDAP Integration](./LdapSchema.md)
-* [Integration](Integrations.md) - GRPC, Envoy, Service Mesh, Generics and more
-* [Identity Protection](StrongIdentity.md) - MitM, Confused deputy, replay attacks
+* [Integration](./Integrations.md) - gRPC, Envoy, Service Mesh, Generics and more
+* [Identity Protection](./StrongIdentity.md) - MitM, Confused deputy, replay attacks
 * FAQ
 
 

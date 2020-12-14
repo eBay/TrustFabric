@@ -29,13 +29,13 @@ Integrity Protection is ensured by using asymmetric encryption scheme for signin
 
 Specification meets the confidentiality requirement by enforcing the TLS 1.2 (or higher) mechanism for encrypting the communication over the network.
 
-### Man-in-th-middle protection
+### Man-in-the-middle protection
 
-Man-in-the-middle protections differ for session and fabric layer and are covered separately below.
+Man-in-the-middle protection differ for session and fabric layer and are covered separately below.
 
-Session (user) layer requires user identity delegation to be tied to authorized presented (client/relying-party application) via `azp` claims. Any scenario where resource-server needs user delegation are captured via authorized forwarder (`azf`) claims. With session level `access token` with `azp` and `azf` claims and source service sending the fabric layer `access token` that establishes the identity as referenced in `azp` or `azf` claims, confused-deputy, man-in-the middle (via token stealing or replay) and replay attacks are avoided for session layer.
+Session (user) layer requires user identity delegation to be tied to authorized party(client/relying-party application) via `azp` claims. Any scenario where resource-server needs user delegation are captured via authorized forwarder (`azf`) claims. With session level `access token` with `azp` and `azf` claims and source service sending the fabric layer `access token` that establishes the identity as referenced in `azp` or `azf` claims, confused-deputy, man-in-the middle (via token stealing or replay) and replay attacks are avoided for session layer.
 
-Session (user) layer relies of fabric layer for avoiding the these attack, hence it is important to build man-in-the-middle, replay and and impersonation protections in the fabric (application) layer tokens.
+Session (user) layer relies on the fabric layer for avoiding these types of attacks, hence it is important to build man-in-the-middle, replay and and impersonation protections in the fabric (application) layer tokens.
 
 #### Fabric layer IP based protection
 
@@ -46,7 +46,7 @@ TrustFabric includes instance claims (`inst`) as part of fabric (application) la
 
 ### Password-less
 
-Session layer requires `client_id` and `client_secret` for client identification. The fabric layer eliminates the passwords by using tokens that are valid for a short duration. This eliminates client secret generation and a need to secure them centrally.
+Session layer requires `client_id` and `client_secret` for client identification. The fabric layer eliminates the passwords by using tokens that are valid for a short duration, eliminating the need for client secret generation and securing them centrally.
 
 In addition, TrustFabric leverages the Vectors Of Trust as specified in [RFC 8485](https://tools.ietf.org/html/rfc8485) and associated claims `vot` and a`vom`. Purpose of these claims is to use Systems of Records and Sources of Truth (e.g. CMDB or API Servers) to verify and validate application deployment and application behaviour before attestation.
 
