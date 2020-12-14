@@ -37,7 +37,7 @@ TrustFabric tokens can be used as a Token-based Authentication mechanism in appl
 
 SASL enables schemes defined within the OAuth2 framework for non-HTTP based application protocols. TrustFabric can be used as an authorization server for providing OAuth2 Bearer tokens for SASL based applications.  
 
-Refer [RFC#7628](https://tools.ietf.org/html/rfc7628) for more details.
+Refer [RFC 7628](https://tools.ietf.org/html/rfc7628) for more details.
 
 ## Service Mesh Integration
 
