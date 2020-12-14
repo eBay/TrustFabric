@@ -1,21 +1,21 @@
 # Integrations
 
-TrustFabric is based upon industry standard specifications like oAuth, OIDC, JWT etc.. For Client-side integrations, applications can integrate with TrustFabric seamlessly without much changes to their code. For Server-side integrations (as PEP and PDP), TrustFabric integrations can be done at various levels. It could be as simple as evaluating a standard JWS/JWE tokens, or a more advanced integrations which can provide fine grained authorization decisions including support for direct and delegated authorizations.
+TrustFabric is based on industry standard specifications like OAuth2, OIDC, JWT etc.. On the Client-side, applications can integrate with TrustFabric seamlessly without much changes to their code. On Server-side (as PEP and PDP), TrustFabric integrations can be done at various levels. It could be as simple as evaluating a standard JWS/JWE tokens, or a more advanced integrations which can provide fine grained authorization decisions including support for direct and delegated authorizations.
 
-TrustFabric is designed to be integrated with variety of use cases and applications in cloud environments. The level and type of integration varies based on the use case. The TrustFabric specification at present do not go in detail on the integrations aspects as it is one of the future road map items.  The below sections provide an high level recommendation on some of the following common use cases:
+TrustFabric is designed to be integrated with a variety of use cases and applications in a cloud environment. The level and type of integration can vary based on the use case. The below sections provide an high level recommendation on some of the following common use cases:
 
 1. Integration for web-applications (HTTPS)
 2. Integration for gRPC applications
 3. Integration for Generic applications supporting SASL
 4. Integration for Service Mesh
 
-**Road-map** : Specification will cover the specifics in the next iteration.
+**Roadmap** : Specification will cover the specifics in the next iteration.
 
 ## HTTPS Integration
 
 ### Direct application Integration (SDK)
 
-Applications that have the flexibility to change their code can directly use TrustFabric based SDK to obtain Session layer token or Fabric layer tokens for connecting to other services. 
+Applications that have the flexibility to change their code can directly use TrustFabric based SDK to obtain Session layer token or Fabric layer token for connecting to other services. 
 
 TrustFabric based SDK can also be used to authenticate and authorize incoming requests containing TrustFabric identities. 
 
@@ -31,19 +31,19 @@ Both the approaches can be implemented as Envoy extensions or a combination of e
 
 ## gRPC Based Integration
 
-TrustFabric tokens can be used as a Token-based Authentication mechanism in applications using GRPC. 
+TrustFabric tokens can be used as a Token-based Authentication mechanism in applications using gRPC. 
 
 ## SASL Integration
 
-SASL enables schemes defined within the oAuth framework for non-HTTP based application protocols. TrustFabric can be used as an authorization server for providing oAuth Bearer tokens for SASL based applications.  
+SASL enables schemes defined within the OAuth2 framework for non-HTTP based application protocols. TrustFabric can be used as an authorization server for providing OAuth2 Bearer tokens for SASL based applications.  
 
 Refer [RFC#7628](https://tools.ietf.org/html/rfc7628) for more details.
 
-## Service Mesh Integrations
+## Service Mesh Integration
 
 ### Istio Integration
 
-TrustFabric tokens can provide strong identity which can be used as a service identity or end user identity. TrustFabric tokens can be used as a replacement for Istio's certificate based identity or it can coexist along with it.   
+TrustFabric tokens can provide a strong identity which can be used as a service identity or end user identity. TrustFabric tokens can be used as a replacement for Istio's certificate based identity or it can coexist.   
 
 **Peer Authentication and Authorization:** 
 
