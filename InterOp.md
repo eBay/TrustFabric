@@ -24,7 +24,7 @@ As part of referral identity injection, application deployment is provided with 
 TrustFabric leverages OAuth2 to implement token request flows. *It is important to note that the token interaction produces access tokens with application's identity and not the tokens for delegated access*. Identity, subject and access claims embedded in the token are for the application. Unlike OIDC, there are no separate identity tokens. The access token is implemented as a transparent token using JWT and can be used as application identity token (has identity claims embedded). The referral tokens are treated as code-grant issued by DevOps or by Operators. Code-grant delivery can be done via 
 
 - OAuth2 code-grant flow
-- Back-channel i.e. Direct injection to application (e.g. Via secrets in Kubernetes)
+- Back-channel i.e. Direct injection to application (e.g. via secrets in Kubernetes)
 
 #### OAuth2 Authorization Code Flow
 
@@ -107,7 +107,7 @@ Please refer to [RFC 6749 Section 4.1.3](https://tools.ietf.org/html/rfc6749#sec
 
 Note: Consider PKCE specification.
 
-Refresh token flow also follows RFC 6749:
+Refresh token flow also follows [RFC 6749](https://tools.ietf.org/html/rfc6749):
 ```http
      POST /token HTTP/1.1
      Host: server.acme.org
@@ -149,19 +149,49 @@ User based delegation to client application is done using `/authorize` endpoint,
 ```
 Authorization may be required between authentication and authorization endpoint (if hosted separately), in such a case fabric layer client access token can be used as bearer token in the authorization header (`client_secret`).
 
-### Application based delegation
-Application based delegation is similar to user based delegation, the only difference being the requirement of fabric layer access token for initiator application and authorization to access the authorization endpoint.
-
 ### Scope and Claims
 
 Scope and Claims provide integration for roles and entitlements. This specification intends to extend the standard OpenID Connect scopes. This section will be updated in future iterations of the specification.
 
-## Tokens Flow
+Tokens Flow
+--------------------
+The code grant is exchanged for user access token after a successful authentication. This token is issued for a relying party and will have the user access claims. 
+`/token` endpoint will issue both Access Token and ID Token after successful validation of the Code grant. Access token can contain claims if the `/authorize` request has custom scopes. These claims can be validated and used for authorization on the resource server. The ID Token is a security token which contains Claims about the Authenticated User.
 
-### Token endpoint
+Code grant token flow:
+```http
+  GET /token?
+    grant_type= authorization_code
+    &code=[...omitted for brevity...]
+    &client_id=[...omitted for brevity...]
+  Host: server.acme.org
+  Authorization: bearer client_secret
+```
+Refresh token flow:
+```http
+     POST /token HTTP/1.1
+     Host: server.acme.org
+     Content-Type: application/x-www-form-urlencoded
+
+     grant_type=refresh_token
+     &refresh_token=[...omitted for brevity...]
+     &client_id=[...omitted for brevity...]
+  Host: server.acme.org
+  Authorization: bearer client_secret
+```
+
+Access token Response:
+```
+HTTP/1.1 200 OK
+Content-Type: application/json
+{
+   "access_token": [...omitted for brevity...],
+   "id_token": [...omitted for brevity...],
+   "refresh_token": [...omitted for brevity...],
+   "token_type": "Bearer",
+   "expires_in": 3600,
+}
+```
 
 #### Interactions
-
-#### Capturing Delegation
-
-#### Capturing Session Forwarding on Underlay
+Session access token should be treated as a JWT bearer token. The authorized party(`azp`) in this token represents the client application. Fabric layer Access token  can be used as the `client_secret` for this flow.
