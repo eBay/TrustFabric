@@ -1,3 +1,5 @@
+Navigation | [[Table Of Contents]](README.md#navigating-the-documentation)
+
 # Strong Identity: Protections and extensibility
 
 ## Goals

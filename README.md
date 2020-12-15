@@ -1,5 +1,7 @@
 # TrustFabric Identity specification
 
+Navigation | [[Table Of Contents]](README.md#navigating-the-documentation)
+
 ## Applications vs Services
 
 **Note**: *This specification follows the definition as proposed by Jacob Jenkov [here](http://tutorials.jenkov.com/soa/services-applications.html)*

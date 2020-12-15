@@ -1,4 +1,7 @@
+Navigation | [[Table Of Contents]](../README.md#navigating-the-documentation) | [[Identities]](../Identity.md)
+
 # User Identities
+
 TrustFabric specification for user identities applies to your OpenID Connect implementation (OIDC server).
 
 ## BYO IdM

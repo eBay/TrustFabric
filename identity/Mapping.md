@@ -1,3 +1,5 @@
+Navigation | [[Table Of Contents]](../README.md#navigating-the-documentation) | [[Identities]](../Identity.md)
+
 # Identity Mapping
 
 TrustFabric allows identity creation via mappings. This allows easier and flexible adoption of identity representation in your environment.

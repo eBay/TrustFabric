@@ -1,3 +1,5 @@
+Navigation | [[Table Of Contents]](README.md#navigating-the-documentation)
+
 # TrustFabric Tokens
 
 TrustFabric specification provides model for:

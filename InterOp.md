@@ -1,3 +1,5 @@
+Navigation | [[Table Of Contents]](README.md#navigating-the-documentation)
+
 # Interactions and Interoperability
 
 TrustFabric separates the interactions into two layers. First layer is *trusted underlay*, which is a fabric of trusted applications, while the second layer is *trusted overlay* which represents the session aspect of interactions initiated by users and apps via delegation of authorization.

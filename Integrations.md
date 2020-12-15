@@ -1,3 +1,5 @@
+Navigation | [[Table Of Contents]](README.md#navigating-the-documentation)
+
 # Integrations
 
 TrustFabric is based on industry standard specifications like OAuth2, OIDC, JWT etc.. On the Client-side, applications can integrate with TrustFabric seamlessly without much changes to their code. On the Server-side (as PEP and PDP), TrustFabric integration can be done at various levels. It could be as simple as evaluating a standard JWS/JWE tokens, or a more advanced integrations which can provide fine grained authorization decisions including support for direct and delegated authorizations.

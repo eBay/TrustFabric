@@ -1,3 +1,5 @@
+Navigation | [[Table Of Contents]](../README.md#navigating-the-documentation) | [[Identities]](../Identity.md)
+
 # LDAP Schema for Application Identities
 
 **Important**: Please read following references:

@@ -1,3 +1,5 @@
+Navigation | [[Table Of Contents]](README.md#navigating-the-documentation)
+
 # TrustFabric Specification Goals
 
 Typical enterprise service interactions are very complex and diverse. Following diagram illustrates different interactions:

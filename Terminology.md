@@ -1,3 +1,5 @@
+Navigation | [[Table Of Contents]](README.md#navigating-the-documentation)
+
 # Terminology
 
 * **Application** : Application represents a computer program that interacts over a network and performs a set of designed functions.
